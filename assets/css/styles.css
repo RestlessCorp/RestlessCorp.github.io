@@ -539,34 +539,28 @@ strong {
   background-color: #f7faff;
 }
 
-.header__backdrop {
-  position: fixed;
-  inset: var(--header-height-mobile) 0 0;
-  border: 0;
-  opacity: 0;
-  pointer-events: none;
-  background: rgba(7, 18, 36, 0.42);
-  transition: opacity var(--transition-fast);
-}
-
 .header__actions {
-  position: fixed;
-  top: var(--header-height-mobile);
+  position: absolute;
+  top: calc(100% + 0.35rem);
   right: 0;
-  bottom: 0;
+  bottom: auto;
+  left: auto;
   width: min(86vw, 340px);
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  padding: var(--space-lg) var(--space-md) calc(var(--space-lg) + env(safe-area-inset-bottom));
+  padding: var(--space-lg) var(--space-md);
   background-color: var(--color-white);
-  border-left: 1px solid var(--color-border);
-  border-radius: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
+  z-index: 3;
   transform: translateX(100%);
   opacity: 0;
   pointer-events: none;
+  max-height: calc(100dvh - var(--header-height-mobile) - 1rem);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   transition: transform var(--transition-base), opacity var(--transition-fast);
 }
 
@@ -644,16 +638,11 @@ strong {
 
 /* Body offset for fixed header */
 body {
-  padding-top: var(--header-height-mobile);
+  padding-top: calc(var(--header-height-mobile) - 1px);
 }
 
 body.menu-open {
   overflow: hidden;
-}
-
-body.menu-open .header__backdrop {
-  opacity: 1;
-  pointer-events: auto;
 }
 
 /* ============================
@@ -1958,7 +1947,7 @@ body.menu-open .header__backdrop {
   }
 
   body {
-    padding-top: 72px;
+    padding-top: 71px;
   }
 
   .nav__link {
@@ -2006,10 +1995,6 @@ body.menu-open .header__backdrop {
     font-size: 1.125rem;
   }
 
-  .header__backdrop {
-    display: none;
-  }
-
   .header__menu-toggle {
     display: none;
   }
@@ -2055,7 +2040,7 @@ body.menu-open .header__backdrop {
   }
 
   body {
-    padding-top: var(--header-height-desktop);
+    padding-top: calc(var(--header-height-desktop) - 1px);
   }
 
   .header {

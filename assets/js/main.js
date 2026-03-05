@@ -60,7 +60,6 @@ function renderHeader() {
         <span class="header__menu-line"></span>
         <span class="header__menu-line"></span>
       </button>
-      <button class="header__backdrop" id="header-backdrop" type="button" aria-label="Закрити меню"></button>
       <div class="header__actions" id="header-actions">
         <nav class="nav" aria-label="Основна навігація">
           <ul class="nav__list" id="nav-list" role="list">
@@ -159,7 +158,6 @@ function initHeaderScroll() {
 function initMobileMenu() {
   const toggle = document.getElementById('menu-toggle');
   const actions = document.getElementById('header-actions');
-  const backdrop = document.getElementById('header-backdrop');
   if (!toggle || !actions) return;
 
   const closeMenu = () => {
@@ -191,11 +189,9 @@ function initMobileMenu() {
     link.addEventListener('click', closeMenu);
   });
 
-  backdrop?.addEventListener('click', closeMenu);
-
   document.addEventListener('click', (event) => {
     if (window.innerWidth >= 768) return;
-    if (!actions.contains(event.target) && !toggle.contains(event.target) && !backdrop?.contains(event.target)) {
+    if (!actions.contains(event.target) && !toggle.contains(event.target)) {
       closeMenu();
     }
   });
