@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Курси — OK Language School</title>
+  <meta name="description" content="Курси англійської мови в OK Language School: для дітей, підлітків та дорослих. Підготовка до ЗНО, IELTS, розмовні клуби.">
+
+  <meta property="og:title" content="Курси — OK Language School">
+  <meta property="og:description" content="Знайдіть ідеальний курс англійської: від Starter до C1, для будь-якого віку.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:image" content="assets/images/og-image.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Перейти до основного вмісту</a>
+  <header class="header" id="site-header"></header>
+
+  <main id="main-content">
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Наші курси</h1>
+        <p class="page-header__subtitle">Від першого слова до вільного спілкування — знайдіть свій рівень</p>
+      </div>
+    </section>
+
+    <!-- Filters & Courses -->
+    <section class="section">
+      <div class="container">
+        <div class="lead-inline animate-on-scroll">
+          <div>
+            <h2 class="lead-inline__title">Не знаєте свій рівень?</h2>
+            <p class="lead-inline__text">Пройдіть короткий тест і отримайте підказку, який курс підійде найкраще.</p>
+          </div>
+          <a href="test-level.html" class="btn btn--secondary">Пройти тест рівня</a>
+        </div>
+
+        <!-- Age Group Filter -->
+        <div class="filter" role="group" aria-label="Фільтр за віком">
+          <span class="filter__label">Вікова група:</span>
+          <button class="filter__btn filter__btn--active" data-filter-age="all">Всі</button>
+          <button class="filter__btn" data-filter-age="kids">Діти (6-9)</button>
+          <button class="filter__btn" data-filter-age="teens">Підлітки (10-17)</button>
+          <button class="filter__btn" data-filter-age="adults">Дорослі (16+)</button>
+        </div>
+
+        <!-- Level Filter -->
+        <div class="filter" role="group" aria-label="Фільтр за рівнем">
+          <span class="filter__label">Рівень:</span>
+          <button class="filter__btn filter__btn--active" data-filter-level="all">Всі</button>
+          <button class="filter__btn" data-filter-level="Starter">Starter</button>
+          <button class="filter__btn" data-filter-level="A1">A1</button>
+          <button class="filter__btn" data-filter-level="A2">A2</button>
+          <button class="filter__btn" data-filter-level="B1">B1</button>
+          <button class="filter__btn" data-filter-level="B2">B2</button>
+          <button class="filter__btn" data-filter-level="C1">C1</button>
+        </div>
+
+        <!-- Course Cards -->
+        <div class="grid grid--2" id="courses-list">
+          <!-- Populated by courses.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section section--gray">
+      <div class="container">
+        <div class="cta-block animate-on-scroll">
+          <h2 class="cta-block__title">Не можете обрати курс?</h2>
+          <p class="cta-block__text">Запишіться на безкоштовну консультацію — ми допоможемо визначити рівень та підібрати програму</p>
+          <a href="contact.html#quick-contact" class="btn btn--outline btn--large">Записатися на консультацію</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="site-footer"></footer>
+
+  <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/courses.js"></script>
+</body>
+</html>
+
