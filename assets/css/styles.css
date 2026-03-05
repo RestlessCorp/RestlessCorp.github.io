@@ -56,6 +56,8 @@
   /* Layout */
   --max-width: 1280px;
   --container-padding: 1rem;
+  --header-height-mobile: 76px;
+  --header-height-desktop: 84px;
 
   /* Border Radius */
   --radius-sm: 0.25rem;
@@ -447,6 +449,7 @@ strong {
   top: 0;
   left: 0;
   right: 0;
+  height: var(--header-height-mobile);
   z-index: var(--z-header);
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
@@ -465,9 +468,10 @@ strong {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  min-height: 76px;
-  padding-top: var(--space-sm);
-  padding-bottom: var(--space-sm);
+  height: 100%;
+  min-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
   position: relative;
 }
 
@@ -529,30 +533,55 @@ strong {
   background-color: currentColor;
 }
 
+.header__menu-toggle--active {
+  color: var(--color-red);
+  border-color: #c5d5f0;
+  background-color: #f7faff;
+}
+
+.header__backdrop {
+  position: fixed;
+  inset: var(--header-height-mobile) 0 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: rgba(7, 18, 36, 0.42);
+  transition: opacity var(--transition-fast);
+}
+
 .header__actions {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: var(--container-padding);
-  right: var(--container-padding);
-  display: none;
+  position: fixed;
+  top: var(--header-height-mobile);
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 340px);
+  display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  padding: var(--space-md);
+  padding: var(--space-lg) var(--space-md) calc(var(--space-lg) + env(safe-area-inset-bottom));
   background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-left: 1px solid var(--color-border);
+  border-radius: 0;
   box-shadow: var(--shadow-lg);
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+  overflow-y: auto;
+  transition: transform var(--transition-base), opacity var(--transition-fast);
 }
 
 .header__actions--open {
-  display: flex;
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .header__social {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding-top: var(--space-sm);
+  margin-top: auto;
+  padding-top: var(--space-md);
   border-top: 1px solid var(--color-border);
 }
 
@@ -594,10 +623,10 @@ strong {
   align-items: center;
   justify-content: flex-start;
   min-width: 0;
-  padding: 0.65rem 0.75rem;
+  padding: 0.8rem 0.85rem;
   color: var(--color-dark);
   font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-small);
+  font-size: 1rem;
   border-radius: var(--radius-md);
   transition: color var(--transition-fast), background-color var(--transition-fast);
   white-space: nowrap;
@@ -615,11 +644,16 @@ strong {
 
 /* Body offset for fixed header */
 body {
-  padding-top: 88px;
+  padding-top: var(--header-height-mobile);
 }
 
 body.menu-open {
   overflow: hidden;
+}
+
+body.menu-open .header__backdrop {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ============================
@@ -1919,12 +1953,16 @@ body.menu-open {
     display: none;
   }
 
-  .header__inner {
-    min-height: 72px;
+  .header {
+    height: 72px;
+  }
+
+  body {
+    padding-top: 72px;
   }
 
   .nav__link {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
     padding: 0.55rem 0.6rem;
   }
 
@@ -1961,13 +1999,15 @@ body.menu-open {
   }
 
   .header__inner {
-    min-height: 84px;
-    padding-top: 0;
-    padding-bottom: 0;
+    height: 100%;
   }
 
   .header__logo-text {
     font-size: 1.125rem;
+  }
+
+  .header__backdrop {
+    display: none;
   }
 
   .header__menu-toggle {
@@ -1987,6 +2027,10 @@ body.menu-open {
     box-shadow: none;
     background: transparent;
     width: auto;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    overflow: visible;
   }
 
   .nav__link {
@@ -2011,7 +2055,11 @@ body.menu-open {
   }
 
   body {
-    padding-top: 84px;
+    padding-top: var(--header-height-desktop);
+  }
+
+  .header {
+    height: var(--header-height-desktop);
   }
 
   /* Hero */
