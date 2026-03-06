@@ -7,25 +7,25 @@
    1. CSS Custom Properties (Design Tokens)
    ============================ */
 :root {
-  /* Colors */
-  --color-red: #E53935;
-  --color-red-dark: #C62828;
-  --color-red-light: #FEE2E2;
-  --color-yellow: #FFC928;
-  --color-yellow-dark: #F0B100;
-  --color-yellow-light: #FFF5CC;
-  --color-dark: #132541;
-  --color-dark-light: #32496D;
+  /* Colors - Modernized HSL Palette */
+  --color-red: hsl(348, 83%, 47%);
+  --color-red-dark: hsl(348, 83%, 37%);
+  --color-red-light: hsl(348, 83%, 95%);
+  --color-yellow: hsl(45, 100%, 58%);
+  --color-yellow-dark: hsl(45, 100%, 48%);
+  --color-yellow-light: hsl(45, 100%, 94%);
+  --color-dark: hsl(217, 54%, 11%);
+  --color-dark-light: hsl(217, 40%, 25%);
   --color-white: #FFFFFF;
-  --color-blue: #2D6AE3;
-  --color-blue-dark: #1D4ED8;
-  --color-light-gray: #F5F8FF;
-  --color-gray: #8DA1BF;
-  --color-gray-dark: #5D7294;
-  --color-border: #D9E4F4;
-  --color-success: #16A34A;
-  --color-warning: #F59E0B;
-  --color-error: #DC2626;
+  --color-blue: hsl(221, 83%, 53%);
+  --color-blue-dark: hsl(221, 83%, 43%);
+  --color-light-gray: hsl(210, 30%, 98%);
+  --color-gray: hsl(215, 15%, 65%);
+  --color-gray-dark: hsl(215, 20%, 45%);
+  --color-border: hsl(215, 20%, 90%);
+  --color-success: hsl(142, 76%, 36%);
+  --color-warning: hsl(38, 92%, 50%);
+  --color-error: hsl(348, 83%, 47%);
 
   /* Typography */
   --font-heading: 'Montserrat', sans-serif;
@@ -40,6 +40,7 @@
   --line-height-tight: 1.2;
   --line-height-base: 1.6;
   --font-weight-regular: 400;
+  --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
@@ -60,10 +61,10 @@
   --header-height-desktop: 84px;
 
   /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
   --radius-full: 9999px;
 
   /* Transitions */
@@ -71,11 +72,11 @@
   --transition-base: 300ms ease;
   --transition-slow: 500ms ease;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  /* Shadows - Layered and Soft */
+  --shadow-sm: 0 2px 8px rgba(12, 20, 36, 0.04), 0 1px 2px rgba(12, 20, 36, 0.02);
+  --shadow-md: 0 8px 16px rgba(12, 20, 36, 0.06), 0 4px 8px rgba(12, 20, 36, 0.03);
+  --shadow-lg: 0 12px 24px rgba(12, 20, 36, 0.08), 0 4px 8px rgba(12, 20, 36, 0.04);
+  --shadow-xl: 0 24px 48px rgba(12, 20, 36, 0.12), 0 12px 24px rgba(12, 20, 36, 0.06);
 
   /* Z-index scale */
   --z-dropdown: 100;
@@ -152,17 +153,33 @@ select {
 /* ============================
    3. Typography
    ============================ */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   color: var(--color-dark);
 }
 
-h1 { font-size: var(--font-size-h1); }
-h2 { font-size: var(--font-size-h2); }
-h3 { font-size: var(--font-size-h3); }
-h4 { font-size: var(--font-size-h4); }
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
 
 p {
   margin-bottom: var(--space-md);
@@ -258,16 +275,26 @@ strong {
   font-family: var(--font-heading);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-fast), background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
   text-decoration: none;
   line-height: 1;
   white-space: nowrap;
+  width: 100%;
+  /* Default width for mobile */
+}
+
+@media (min-width: 768px) {
+  .btn {
+    width: auto;
+    /* Revert to auto width on tablet/desktop */
+  }
 }
 
 .btn--primary {
   background-color: var(--color-red);
   color: var(--color-white);
+  border: 1px solid var(--color-red);
 }
 
 .btn--primary:hover {
@@ -287,14 +314,16 @@ strong {
 }
 
 .btn--outline {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
   color: var(--color-white);
-  border: 2px solid var(--color-white);
+  border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .btn--outline:hover {
   background-color: var(--color-white);
-  color: var(--color-red);
+  color: var(--color-dark);
+  border-color: var(--color-white);
 }
 
 .btn--small {
@@ -317,14 +346,15 @@ strong {
    ============================ */
 .card {
   background-color: var(--color-white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   transition: transform var(--transition-base), box-shadow var(--transition-base);
+  border: 1px solid var(--color-border);
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow: var(--shadow-xl);
 }
 
@@ -403,12 +433,13 @@ strong {
 .form__textarea,
 .form__select {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid var(--color-border);
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(203, 213, 225, 0.8);
   border-radius: var(--radius-md);
-  background-color: var(--color-white);
+  background-color: hsl(210, 20%, 98%);
   color: var(--color-dark);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  font-weight: var(--font-weight-medium);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
 .form__input:focus,
@@ -416,7 +447,8 @@ strong {
 .form__select:focus {
   outline: none;
   border-color: var(--color-blue);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  background-color: var(--color-white);
+  box-shadow: 0 0 0 4px rgba(45, 106, 227, 0.15);
 }
 
 .form__input--error,
@@ -431,8 +463,8 @@ strong {
   color: var(--color-error);
 }
 
-.form__input--error ~ .form__error,
-.form__textarea--error ~ .form__error {
+.form__input--error~.form__error,
+.form__textarea--error~.form__error {
   display: block;
 }
 
@@ -451,16 +483,18 @@ strong {
   right: 0;
   height: var(--header-height-mobile);
   z-index: var(--z-header);
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(19, 37, 65, 0.1);
-  box-shadow: 0 2px 8px rgba(19, 37, 65, 0.06);
-  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), border-color var(--transition-base), background-color var(--transition-base);
 }
 
 .header--scrolled {
-  box-shadow: 0 6px 16px rgba(19, 37, 65, 0.1);
-  border-color: rgba(19, 37, 65, 0.12);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.95);
 }
 
 .header__inner {
@@ -1409,15 +1443,30 @@ body.menu-open {
 .course-card__footer {
   padding: var(--space-md) var(--space-lg) var(--space-lg);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: flex-start;
   border-top: 1px solid var(--color-border);
   margin-top: var(--space-md);
 }
 
+@media (min-width: 480px) {
+  .course-card__footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
 .course-card__schedule {
   font-size: var(--font-size-small);
-  color: var(--color-gray-dark);
+  color: var(--color-dark);
+  font-weight: var(--font-weight-medium);
+  background-color: var(--color-light-gray);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  max-width: 100%;
+  text-wrap: balance;
 }
 
 .course-card__details {
@@ -1892,13 +1941,13 @@ body.menu-open {
    ============================ */
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .animate-on-scroll--visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .animate-on-scroll--delay-1 {
@@ -2035,8 +2084,13 @@ body.menu-open {
   }
 
   .header__social {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     padding-top: 0;
     border-top: 0;
+    margin-top: 0;
   }
 
   body {
@@ -2133,6 +2187,7 @@ body.menu-open {
 
 /* Print styles */
 @media print {
+
   .header,
   .footer,
   .nav,

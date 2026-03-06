@@ -166,9 +166,8 @@
 
   <footer class="footer" id="site-footer"></footer>
 
-  <script type="module" src="assets/js/main.js"></script>
-  <script type="module">
-    import { fetchJSON } from './assets/js/main.js';
+  <script src="assets/js/main.js"></script>
+  <script>
 
     function initCoursesAutoScroll(container) {
       if (!container) return;
@@ -228,7 +227,7 @@
       if (!container) return;
 
       try {
-        const data = await fetchJSON('assets/data/courses.json');
+        const data = await window.fetchJSON('assets/data/courses.json');
         container.innerHTML = data.courses.map(course => `
           <div class="courses-preview__card card">
             <div class="card__body courses-preview__body">

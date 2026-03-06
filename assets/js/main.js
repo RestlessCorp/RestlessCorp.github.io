@@ -3,21 +3,21 @@
  * Shared functionality: header, footer, navigation, animations
  */
 
-export async function fetchJSON(url) {
+window.fetchJSON = async function(url) {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch ${url}: ${response.status}`);
   }
   return response.json();
-}
+};
 
-export function debounce(fn, delay = 200) {
+window.debounce = function(fn, delay = 200) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
     timer = setTimeout(() => fn(...args), delay);
   };
-}
+};
 
 function getBasePath() {
   const path = window.location.pathname;
@@ -228,7 +228,7 @@ function initScrollAnimations() {
   elements.forEach(element => observer.observe(element));
 }
 
-export function initCounters() {
+window.initCounters = function() {
   const counters = document.querySelectorAll('[data-count]');
   if (counters.length === 0) return;
 
@@ -245,7 +245,7 @@ export function initCounters() {
   );
 
   counters.forEach(element => observer.observe(element));
-}
+};
 
 function animateCounter(element) {
   const target = parseInt(element.dataset.count, 10);

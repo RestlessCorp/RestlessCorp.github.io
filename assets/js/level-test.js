@@ -1,4 +1,4 @@
-﻿import { fetchJSON } from './main.js';
+﻿
 
 const TEST_DURATION_SECONDS = 10 * 60;
 const VIBER_CHAT_URL = 'viber://chat?number=%2B380678041149';

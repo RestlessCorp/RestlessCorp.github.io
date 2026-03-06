@@ -4,7 +4,7 @@
  * - Handle Viber desktop fallback
  */
 
-import { fetchJSON } from './main.js';
+
 
 const MOBILE_UA_REGEX = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i;
 

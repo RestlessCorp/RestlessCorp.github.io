@@ -3,7 +3,7 @@
  * Fetches courses from JSON, renders cards, handles filtering and accordion
  */
 
-import { fetchJSON } from './main.js';
+
 
 let allCourses = [];
 let activeAgeFilter = 'all';

@@ -3,7 +3,7 @@
  * Loads schedule from JSON, dual view (table/cards), filtering
  */
 
-import { fetchJSON } from './main.js';
+
 
 let allSchedule = [];
 const DAY_ORDER = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота', 'Неділя'];
@@ -95,8 +95,8 @@ function renderTable(items) {
       </thead>
       <tbody>
         ${items.map(item => {
-          const spots = getSpotsInfo(item);
-          return `
+    const spots = getSpotsInfo(item);
+    return `
             <tr data-type="${item.type}">
               <td>${item.day}</td>
               <td>${item.startTime} - ${item.endTime}</td>
@@ -113,7 +113,7 @@ function renderTable(items) {
               </td>
             </tr>
           `;
-        }).join('')}
+  }).join('')}
       </tbody>
     </table>
   `;
