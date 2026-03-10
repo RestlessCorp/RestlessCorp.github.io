@@ -7,9 +7,7 @@ Static website for **OK Language School** (Новий Розділ, Львівс
 - Parent-first homepage flow
 - Simplified header navigation: `Головна`, `Курси`, `Розклад`, `Контакти`
 - Contact flow without email form
-- Registration only via:
-  - `Viber`
-  - `Phone call`
+- Registration only via phone call
 - Testimonials section removed from Home
 
 ## Tech Stack
@@ -41,8 +39,6 @@ Supported query context:
 
 Primary contact actions:
 
-- `viber://chat?number=%2B380678041149`
-- `viber://chat?number=%2B380931456624`
 - `tel:+380678041149`
 - `tel:+380931456624`
 
@@ -55,7 +51,7 @@ Primary contact actions:
 5. Verify published pages:
    - Home/Courses/Schedule/Contact/Blog/404
    - Favicons and OG image load correctly
-   - Contact buttons open Viber/Phone actions
+   - Contact buttons open the two phone actions
 
 ## Project Structure
 

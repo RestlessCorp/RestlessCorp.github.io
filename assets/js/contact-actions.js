@@ -1,12 +1,7 @@
 ﻿/**
  * Contact page interactions:
  * - Show selected course context from URL query params
- * - Handle Viber desktop fallback
  */
-
-
-
-const MOBILE_UA_REGEX = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i;
 
 function normalizeText(value = '') {
   return value.trim().toLowerCase();
@@ -43,38 +38,6 @@ async function initCourseContext() {
   context.hidden = false;
 }
 
-function initViberFallback() {
-  const links = document.querySelectorAll('[data-viber-link]');
-  if (links.length === 0) return;
-
-  const isMobile = MOBILE_UA_REGEX.test(navigator.userAgent);
-  if (isMobile) return;
-
-  links.forEach(link => {
-    link.addEventListener('click', (event) => {
-      const fallback = link.dataset.viberFallback || 'https://www.viber.com/';
-      let pageHidden = false;
-      const onVisibilityChange = () => {
-        if (document.visibilityState === 'hidden') {
-          pageHidden = true;
-        }
-      };
-
-      event.preventDefault();
-      document.addEventListener('visibilitychange', onVisibilityChange);
-      window.location.href = link.href;
-
-      window.setTimeout(() => {
-        document.removeEventListener('visibilitychange', onVisibilityChange);
-        if (!pageHidden) {
-          window.open(fallback, '_blank', 'noopener,noreferrer');
-        }
-      }, 900);
-    });
-  });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   initCourseContext();
-  initViberFallback();
 });

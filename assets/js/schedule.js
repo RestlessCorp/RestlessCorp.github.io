@@ -8,6 +8,14 @@
 let allSchedule = [];
 const DAY_ORDER = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота', 'Неділя'];
 
+function matchesAgeFilter(ageGroup = '', ageFilter = 'all') {
+  if (ageFilter === 'all') return true;
+  if (ageFilter === 'kids') return ageGroup.includes('6-9');
+  if (ageFilter === 'teens') return ageGroup.includes('10-14') || ageGroup.includes('15-17');
+  if (ageFilter === 'adults') return ageGroup.includes('Дорослі') || ageGroup.includes('16+') || ageGroup.includes('18+');
+  return ageGroup.includes(ageFilter);
+}
+
 async function initSchedule() {
   const tableContainer = document.getElementById('schedule-table-container');
   const cardsContainer = document.getElementById('schedule-cards-container');
@@ -36,7 +44,7 @@ function getFilteredSchedule() {
   return allSchedule
     .filter(item => {
       if (dayFilter !== 'all' && item.day !== dayFilter) return false;
-      if (ageFilter !== 'all' && !item.ageGroup.includes(ageFilter)) return false;
+      if (!matchesAgeFilter(item.ageGroup, ageFilter)) return false;
       if (levelFilter !== 'all' && !item.level.includes(levelFilter)) return false;
       if (typeFilter !== 'all' && item.type !== typeFilter) return false;
       return true;
@@ -186,4 +194,3 @@ function initViewSwitch() {
 }
 
 document.addEventListener('DOMContentLoaded', initSchedule);
-

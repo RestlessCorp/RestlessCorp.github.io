@@ -1,9 +1,4 @@
-﻿
-
-const TEST_DURATION_SECONDS = 10 * 60;
-const VIBER_CHAT_URL = 'viber://chat?number=%2B380678041149';
-const VIBER_FALLBACK_URL = 'https://www.viber.com/';
-const MOBILE_UA_REGEX = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i;
+﻿const TEST_DURATION_SECONDS = 10 * 60;
 
 const state = {
   data: null,
@@ -13,8 +8,7 @@ const state = {
   answers: [],
   currentIndex: 0,
   remainingSeconds: TEST_DURATION_SECONDS,
-  timerId: null,
-  summaryMessage: ''
+  timerId: null
 };
 
 const elements = {};
@@ -37,8 +31,7 @@ function cacheElements() {
   elements.resultScore = document.getElementById('result-score');
   elements.resultFeedback = document.getElementById('result-feedback');
   elements.resultCourses = document.getElementById('result-courses');
-  elements.resultViber = document.getElementById('result-viber');
-  elements.resultCopy = document.getElementById('result-copy');
+  elements.resultContact = document.getElementById('result-contact');
   elements.resultRestart = document.getElementById('result-restart');
   elements.resultNote = document.getElementById('result-note');
 }
@@ -56,12 +49,12 @@ function formatTime(totalSeconds) {
 }
 
 function findProfile(profileId) {
-  return state.data?.profiles?.find(profile => profile.id === profileId) || null;
+  return state.data?.profiles?.find((profile) => profile.id === profileId) || null;
 }
 
 function buildCoursesMap(coursesData) {
   const map = new Map();
-  (coursesData.courses || []).forEach(course => {
+  (coursesData.courses || []).forEach((course) => {
     map.set(course.id, course.title);
   });
   return map;
@@ -74,7 +67,7 @@ function getCourseTitle(courseId) {
 function renderProfileCards() {
   if (!elements.profileList || !state.data?.profiles) return;
 
-  elements.profileList.innerHTML = state.data.profiles.map(profile => `
+  elements.profileList.innerHTML = state.data.profiles.map((profile) => `
     <button type="button" class="profile-card" data-profile-id="${profile.id}">
       <span class="profile-card__badge">18 питань</span>
       <h3 class="profile-card__title">${profile.title}</h3>
@@ -83,7 +76,7 @@ function renderProfileCards() {
     </button>
   `).join('');
 
-  elements.profileList.querySelectorAll('[data-profile-id]').forEach(button => {
+  elements.profileList.querySelectorAll('[data-profile-id]').forEach((button) => {
     button.addEventListener('click', () => {
       startProfile(button.dataset.profileId);
     });
@@ -95,7 +88,6 @@ function resetTestState() {
   state.answers = [];
   state.currentIndex = 0;
   state.remainingSeconds = TEST_DURATION_SECONDS;
-  state.summaryMessage = '';
 
   if (state.timerId) {
     window.clearInterval(state.timerId);
@@ -155,12 +147,12 @@ function renderCurrentQuestion() {
     return `<button type="button" class="quiz-option${activeClass}" data-answer-index="${index}">${option}</button>`;
   }).join('');
 
-  elements.quizOptions.querySelectorAll('[data-answer-index]').forEach(button => {
+  elements.quizOptions.querySelectorAll('[data-answer-index]').forEach((button) => {
     button.addEventListener('click', () => {
       const answerIndex = Number(button.dataset.answerIndex);
       state.answers[state.currentIndex] = answerIndex;
 
-      elements.quizOptions.querySelectorAll('[data-answer-index]').forEach(item => {
+      elements.quizOptions.querySelectorAll('[data-answer-index]').forEach((item) => {
         item.classList.toggle('quiz-option--active', Number(item.dataset.answerIndex) === answerIndex);
       });
 
@@ -179,30 +171,17 @@ function scoreTest() {
 }
 
 function resolveBand(score) {
-  return state.profile.resultBands.find(band => score >= band.minScore && score <= band.maxScore) || state.profile.resultBands[0];
+  return state.profile.resultBands.find((band) => score >= band.minScore && score <= band.maxScore) || state.profile.resultBands[0];
 }
 
 function buildRecommendedCourses(band) {
   const courseIds = [band.primaryCourseId, ...(band.secondaryCourseIds || [])].filter(Boolean);
   const uniqueIds = [...new Set(courseIds)];
 
-  return uniqueIds.map(courseId => ({
+  return uniqueIds.map((courseId) => ({
     id: courseId,
     title: getCourseTitle(courseId)
   }));
-}
-
-function buildSummaryMessage(score, band, courses) {
-  const coursesList = courses.map(course => course.title).join(', ');
-
-  return [
-    'Привіт! Я пройшов(ла) тест рівня на сайті OK Language School.',
-    `Профіль: ${state.profile.title}`,
-    `Результат: ${score}/${state.questions.length}`,
-    `Рівень: ${band.cefr} (${band.label})`,
-    `Рекомендований курс: ${coursesList}`,
-    'Підкажіть, будь ласка, найкращий формат і розклад.'
-  ].join('\n');
 }
 
 function renderResult(score, band, courses, timeExpired) {
@@ -213,70 +192,28 @@ function renderResult(score, band, courses, timeExpired) {
   elements.resultCourses.innerHTML = `
     <p class="result-card__courses-title">Рекомендований курс:</p>
     <ul class="result-card__courses-list">
-      ${courses.map(course => `<li>${course.title}</li>`).join('')}
+      ${courses.map((course) => `<li>${course.title}</li>`).join('')}
     </ul>
   `;
 
-  state.summaryMessage = buildSummaryMessage(score, band, courses);
-
-  const encodedMessage = encodeURIComponent(state.summaryMessage);
-  elements.resultViber.href = `${VIBER_CHAT_URL}&text=${encodedMessage}`;
+  if (elements.resultContact) {
+    const target = band.primaryCourseId
+      ? `contact.html?courseId=${encodeURIComponent(band.primaryCourseId)}#quick-contact`
+      : 'contact.html#quick-contact';
+    elements.resultContact.href = target;
+  }
 
   if (timeExpired) {
     elements.resultNote.textContent = 'Час завершився, тому ми порахували результат за вибраними відповідями.';
   } else {
-    elements.resultNote.textContent = 'Готово! Можете відправити результат у Viber одним кліком.';
-  }
-}
-
-async function copySummaryToClipboard() {
-  if (!state.summaryMessage) return false;
-
-  try {
-    await navigator.clipboard.writeText(state.summaryMessage);
-    elements.resultNote.textContent = 'Результат скопійовано. Вставте повідомлення у чат Viber за потреби.';
-    return true;
-  } catch (error) {
-    console.error('Failed to copy summary:', error);
-    elements.resultNote.textContent = 'Не вдалося скопіювати автоматично. Спробуйте ще раз.';
-    return false;
+    elements.resultNote.textContent = `Коли будете телефонувати, скажіть нам результат: ${band.cefr} (${band.label}).`;
   }
 }
 
 function bindResultActions() {
-  elements.resultCopy.addEventListener('click', () => {
-    copySummaryToClipboard();
-  });
-
   elements.resultRestart.addEventListener('click', () => {
     resetTestState();
     showScreen('start');
-  });
-
-  elements.resultViber.addEventListener('click', async (event) => {
-    const fallback = elements.resultViber.dataset.viberFallback || VIBER_FALLBACK_URL;
-    const isMobile = MOBILE_UA_REGEX.test(navigator.userAgent);
-    let pageHidden = false;
-
-    await copySummaryToClipboard();
-
-    if (!isMobile) {
-      const onVisibilityChange = () => {
-        if (document.visibilityState === 'hidden') pageHidden = true;
-      };
-
-      document.addEventListener('visibilitychange', onVisibilityChange);
-
-      window.setTimeout(() => {
-        document.removeEventListener('visibilitychange', onVisibilityChange);
-        if (!pageHidden) {
-          window.open(fallback, '_blank', 'noopener,noreferrer');
-        }
-      }, 900);
-    }
-
-    event.preventDefault();
-    window.location.href = elements.resultViber.href;
   });
 }
 
