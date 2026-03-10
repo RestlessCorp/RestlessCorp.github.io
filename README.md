@@ -69,7 +69,6 @@ Primary contact actions:
 │   ├── css/styles.css
 │   ├── js/
 │   │   ├── main.js
-│   │   ├── contact-actions.js
 │   │   ├── courses.js
 │   │   └── schedule.js
 │   ├── data/

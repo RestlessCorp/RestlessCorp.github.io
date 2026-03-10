@@ -1690,22 +1690,6 @@ body.menu-open {
 /* ============================
    20. Contact Page
    ============================ */
-.quick-contact__course {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
-  border-radius: var(--radius-lg);
-  background-color: var(--color-yellow-light);
-  margin-bottom: var(--space-xl);
-}
-
-.quick-contact__course p {
-  margin-bottom: 0;
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-dark);
-}
-
 .quick-contact {
   display: grid;
   gap: var(--space-lg);
