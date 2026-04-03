@@ -9,14 +9,16 @@ const workSans = Work_Sans({
 
 export const metadata: Metadata = {
   title: "Something Is Cooking | Expert Game Development Partner",
-  description: "Expert game development support for multiplayer systems, live-service backends, technical architecture, and production support.",
+  description: "Expert game development support with Unity development, QA + PM, 2D art coverage, porting, and multiplatform release support.",
   keywords: [
     "Unity game development studio",
     "game co-development studio",
     "outsource game development",
-    "Unity multiplayer development",
-    "live-service game development",
+    "Unity developers",
+    "game QA and production support",
+    "2D game artist",
     "game porting support",
+    "multiplatform game development",
     "technical art for Unity",
   ],
   icons: {

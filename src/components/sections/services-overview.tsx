@@ -1,32 +1,32 @@
 import { Container } from "@/components/ui/container";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Rocket, Users, Settings, Database } from "lucide-react";
+import { Brush, Users, MonitorSmartphone, ClipboardCheck } from "lucide-react";
 import Link from "next/link";
 
 const services = [
   {
     title: "Unity Co-Development",
-    description: "Expert Unity engineers who plug into your sprint, architecture, and review flow.",
+    description: "Unity developers who plug into your sprint, architecture, and review flow.",
     icon: Users,
     href: "/services#unity-co-dev",
   },
   {
-    title: "Technical Architecture",
-    description: "System design, rescue work, and performance fixes for complex game codebases.",
-    icon: Settings,
-    href: "/services#tech-art",
+    title: "QA & Production Support",
+    description: "QA coverage, bug triage, and PM coordination that keep production moving.",
+    icon: ClipboardCheck,
+    href: "/services#qa-pm",
   },
   {
-    title: "Game Design & Economy",
-    description: "Progression, retention, and monetization design shaped for long-term operations.",
-    icon: Rocket,
-    href: "/services#game-design",
+    title: "2D Art Support",
+    description: "Versatile 2D art for gameplay assets, UI, and production-ready visual support.",
+    icon: Brush,
+    href: "/services#art-support",
   },
   {
-    title: "Live-Service Systems",
-    description: "Connected gameplay, backend coordination, and tools that support persistent features.",
-    icon: Database,
-    href: "/services#multiplayer",
+    title: "Porting & Release",
+    description: "Multiplatform support for PC, mobile, handheld, and console releases.",
+    icon: MonitorSmartphone,
+    href: "/services#porting",
   },
 ];
 
@@ -40,8 +40,8 @@ export function ServicesOverview() {
             <span className="text-accent-gold italic">for production risk</span>
           </h2>
           <p className="text-text-muted text-lg">
-            We focus on the areas where connected games usually stall: architecture,
-            live-service systems, economy design, and expert execution.
+            We focus on practical production support: Unity development,
+            QA + PM coverage, versatile 2D art, and multiplatform release work.
           </p>
         </div>
 

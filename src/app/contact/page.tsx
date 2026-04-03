@@ -79,7 +79,7 @@ export default function ContactPage() {
                     <ShieldCheck className="w-5 h-5 text-accent-gold shrink-0" />
                     <div>
                       <h3 className="text-sm font-bold text-white mb-1">Systems in scope</h3>
-                      <p className="text-xs text-text-muted">Multiplayer, live-service flows, architecture, performance, tools, or release work.</p>
+                      <p className="text-xs text-text-muted">Unity gameplay work, QA + PM support, 2D art, architecture, or multiplatform release work.</p>
                     </div>
                   </div>
                   <div className="flex gap-4 items-start">
@@ -168,8 +168,8 @@ export default function ContactPage() {
                         className="w-full bg-background border border-white/10 rounded-md p-4 text-foreground appearance-none focus:border-accent-gold focus:outline-none transition-colors"
                       >
                         <option>Unity Co-Development</option>
-                        <option>Live-Service Systems</option>
-                        <option>Multiplayer Implementation</option>
+                        <option>QA & Production Support</option>
+                        <option>2D Art Support</option>
                         <option>Technical Architecture</option>
                         <option>Porting & Release Readiness</option>
                         <option>Technical Rescue</option>

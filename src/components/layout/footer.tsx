@@ -7,8 +7,8 @@ const footerLinks = [
     title: "Services",
     links: [
       { name: "Unity Co-Development", href: "/services#unity-co-dev" },
-      { name: "Game Design & Economy", href: "/services#game-design" },
-      { name: "Multiplayer Systems", href: "/services#multiplayer" },
+      { name: "QA & Production Support", href: "/services#qa-pm" },
+      { name: "2D Art Support", href: "/services#art-support" },
       { name: "Technical Architecture", href: "/services#tech-art" },
       { name: "Porting & Release", href: "/services#porting" },
     ],
@@ -47,8 +47,8 @@ export function Footer() {
               <span className="text-foreground font-bold tracking-tight text-xl">Something Is Cooking</span>
             </Link>
             <p className="text-text-muted text-sm max-w-sm mb-6">
-              Expert game development support for multiplayer systems, live-service backends,
-              and performance-critical production work.
+              Expert game development support with Unity development, QA + PM,
+              2D art coverage, and multiplatform release support.
             </p>
             <div className="flex gap-4">
               <span className="text-xs text-text-muted/50">&copy; 2026 Something Is Cooking Studio.</span>

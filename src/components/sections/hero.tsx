@@ -21,12 +21,13 @@ export function Hero() {
             Expert Game Development
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight mb-8 text-white leading-[1.05]">
-            Expert engineering <br />
-            <span className="text-gradient-hero italic font-serif">for connected games</span>
+            Expert game development <br />
+            <span className="text-gradient-hero italic font-serif">for multiplatform projects</span>
           </h1>
           <p className="max-w-3xl mx-auto text-lg md:text-xl text-text-muted mb-12 leading-relaxed opacity-90">
-            We help studios ship multiplayer features, live-service infrastructure,
-            and performance-critical systems without slowing core production.
+            We provide a compact production team with Unity development, QA + PM,
+            versatile 2D art support, and multiplatform delivery for PC, mobile,
+            handheld, and console games.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" variant="premium" className="w-full sm:w-auto" asChild>

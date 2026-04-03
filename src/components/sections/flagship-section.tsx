@@ -19,8 +19,8 @@ export function FlagshipSection() {
               <span className="text-gradient-hero">system ownership we can take on</span>
             </h2>
             <p className="text-text-muted text-lg mb-8 leading-relaxed max-w-xl">
-              We built connected gameplay systems, supporting web services,
-              technical art pipelines, and production tooling around one shared
+              We built gameplay systems, technical art pipelines,
+              multiplatform production support, and delivery tooling around one shared
               Unity foundation.
             </p>
 
@@ -81,7 +81,7 @@ export function FlagshipSection() {
               <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end gap-4">
                 <div>
                   <h4 className="text-white font-bold text-lg mb-1">Calamity Online</h4>
-                  <p className="text-xs text-text-muted">Connected production proof</p>
+                  <p className="text-xs text-text-muted">Production proof</p>
                 </div>
                 <div className="flex items-center gap-2 bg-accent-gold text-background px-3 py-1.5 rounded-full">
                   <div className="w-2 h-2 rounded-full bg-background animate-pulse" />

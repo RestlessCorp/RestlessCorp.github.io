@@ -36,7 +36,7 @@ export default function AboutPage() {
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">An expert game development partner built around execution</h1>
             <p className="text-xl text-text-muted leading-relaxed">
               Something Is Cooking is a technical game development studio focused on co-development,
-              connected systems, and the engineering work that tends to decide schedule risk.
+              multiplatform delivery, and the production work that tends to decide schedule risk.
             </p>
           </div>
         </Container>
@@ -63,8 +63,8 @@ export default function AboutPage() {
             <div>
               <h2 className="text-3xl font-bold mb-6 text-white">We use our own production work as the proof point</h2>
               <p className="text-text-muted mb-8 leading-relaxed">
-                Before supporting other teams, we built Calamity as a connected production with gameplay systems,
-                technical art, and live-service infrastructure that had to work together under real constraints.
+                Before supporting other teams, we built Calamity as a production that combined gameplay systems,
+                technical art, and platform-aware delivery work under real constraints.
               </p>
               <div className="space-y-4">
                 <div className="flex gap-4 p-4 border border-white/8 rounded-md bg-surface-1/30">

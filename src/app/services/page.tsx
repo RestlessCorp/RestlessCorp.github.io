@@ -3,36 +3,36 @@ import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Rocket, Database, Layout, Share2 } from "lucide-react";
+import { Users, ClipboardCheck, Brush, Layout, Share2 } from "lucide-react";
 import Link from "next/link";
 
 const detailedServices = [
   {
     id: "unity-co-dev",
     title: "Unity Co-Development",
-    subtitle: "Expert Unity capacity that fits your production loop.",
+    subtitle: "Unity development capacity that fits your production loop.",
     description:
-      "We join existing teams as expert contributors, working inside your sprint cadence, coding standards, and review process.",
-    highlights: ["Sprint integration", "Code review parity", "Fast ramp-up", "Lead-level support"],
+      "We join existing teams as embedded Unity developers, working inside your sprint cadence, coding standards, and review process.",
+    highlights: ["Sprint integration", "Gameplay systems", "Fast ramp-up", "Code review parity"],
     icon: Users,
   },
   {
-    id: "game-design",
-    title: "Game Design & Economy",
-    subtitle: "Retention, progression, and monetization systems.",
+    id: "qa-pm",
+    title: "QA & Production Support",
+    subtitle: "Testing, coordination, and day-to-day delivery support.",
     description:
-      "We shape progression loops, live-service economy design, and monetization systems so product goals stay aligned with production reality.",
-    highlights: ["Progression loops", "Economy tuning", "Retention design", "Systems balancing"],
-    icon: Rocket,
+      "We provide QA coverage, bug reporting, regression support, and PM coordination so your development team can stay focused on shipping.",
+    highlights: ["QA coverage", "Bug triage", "Regression checks", "PM support"],
+    icon: ClipboardCheck,
   },
   {
-    id: "multiplayer",
-    title: "Live-Service & Web-Connected Systems",
-    subtitle: "Connected gameplay and backend coordination.",
+    id: "art-support",
+    title: "2D Art & UI Support",
+    subtitle: "Versatile art support for production needs.",
     description:
-      "Implement high-performance multiplayer systems and live-service backends. We handle data orchestration, matchmaking, and cross-platform synchronization.",
-    highlights: ["Multiplayer gameplay", "Live-service flows", "Matchmaking", "Cross-platform sync"],
-    icon: Database,
+      "Our 2D art support covers gameplay assets, UI elements, promotional visuals, and the day-to-day visual tasks that keep production moving.",
+    highlights: ["Gameplay assets", "UI support", "Visual polish", "Production art"],
+    icon: Brush,
   },
   {
     id: "tech-art",
@@ -48,8 +48,8 @@ const detailedServices = [
     title: "Porting & Release Readiness",
     subtitle: "Optimization and platform delivery support.",
     description:
-      "We prepare games for PC, handheld, mobile, and console targets with platform integration, performance work, and release-readiness checks.",
-    highlights: ["Platform support", "Optimization", "SDK integration", "Release preparation"],
+      "We prepare games for PC, mobile, handheld, and console targets with platform integration, performance work, and release-readiness checks.",
+    highlights: ["PC and mobile", "Handheld and console", "Optimization", "Release preparation"],
     icon: Share2,
   },
 ];
@@ -64,11 +64,12 @@ export default function ServicesPage() {
           <div className="max-w-3xl">
             <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">Services</span>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
-              Expert game development support for the systems that decide shipping risk
+              Expert game development support for teams that need reliable delivery
             </h1>
             <p className="text-xl text-text-muted leading-relaxed">
-              We help game teams add expert execution where architecture, connected systems,
-              performance, and release pressure can slow production down.
+              We provide Unity development, QA + PM support, versatile 2D art,
+              and multiplatform release help for studios that need an external team
+              they can plug into production quickly.
             </p>
           </div>
         </Container>
@@ -117,7 +118,7 @@ export default function ServicesPage() {
             <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">Engagement</span>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Bring in expert support where the roadmap is hardest</h2>
             <p className="text-text-muted text-lg mb-8">
-              Use us for embedded co-development, targeted rescue work, or a defined connected-systems scope.
+              Use us for embedded game development, QA + PM support, art coverage, or multiplatform release work.
             </p>
             <Button variant="premium" size="lg" asChild>
               <Link href="/contact">Send Project Brief</Link>

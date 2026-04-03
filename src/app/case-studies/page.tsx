@@ -43,7 +43,7 @@ const engagementModels = [
   },
   {
     title: "Defined System Ownership",
-    description: "A contained scope for multiplayer, live-service, or performance-critical systems.",
+    description: "A contained scope for gameplay systems, production support, or performance-critical systems.",
   },
   {
     title: "Rescue and Release Support",
