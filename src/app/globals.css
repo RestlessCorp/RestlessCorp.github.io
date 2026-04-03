@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #231E41;
+  --background: #231e41;
   --foreground: #f9fefd;
   --primary: #844acb;
   --primary-glow: #9559d8;
@@ -34,7 +34,7 @@
   --radius-md: 8px;
   --radius-lg: 12px;
 
-  --shadow-glow: 0 0 20px rgba(149, 89, 216, 0.5);
+  --shadow-glow: 0 12px 32px rgba(132, 74, 203, 0.22);
   --shadow-card: 0 10px 18px rgba(0, 0, 0, 0.25);
 }
 
@@ -46,11 +46,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Utilities */
 .glass-panel {
-  background: rgba(63, 46, 102, 0.4);
+  background: rgba(36, 27, 57, 0.72);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--primary-border);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .text-gradient-hero {

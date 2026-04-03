@@ -8,8 +8,8 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Something Is Cooking | Expert Unity Co-Development Studio",
-  description: "Expert Unity game development studio behind Calamity. We offer co-development, full-cycle outsource development, multiplayer systems, and technical art for games.",
+  title: "Something Is Cooking | Senior Unity Technical Partner",
+  description: "Senior Unity co-development for multiplayer systems, live-service backends, technical architecture, and production support.",
   keywords: [
     "Unity game development studio",
     "game co-development studio",
