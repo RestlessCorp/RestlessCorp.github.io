@@ -6,7 +6,7 @@ import { ShieldCheck, Zap, Globe, Cpu } from "lucide-react";
 import { motion } from "framer-motion";
 
 const trustPoints = [
-  { icon: ShieldCheck, text: "Senior Co-Dev" },
+  { icon: ShieldCheck, text: "Expert Co-Dev" },
   { icon: Cpu, text: "Systems Design" },
   { icon: Globe, text: "Live-Service" },
   { icon: Zap, text: "Performance Review" },

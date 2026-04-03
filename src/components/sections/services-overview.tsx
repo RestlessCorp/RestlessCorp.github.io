@@ -6,7 +6,7 @@ import Link from "next/link";
 const services = [
   {
     title: "Unity Co-Development",
-    description: "Senior Unity engineers who plug into your sprint, architecture, and review flow.",
+    description: "Expert Unity engineers who plug into your sprint, architecture, and review flow.",
     icon: Users,
     href: "/services#unity-co-dev",
   },
@@ -41,7 +41,7 @@ export function ServicesOverview() {
           </h2>
           <p className="text-text-muted text-lg">
             We focus on the areas where connected games usually stall: architecture,
-            live-service systems, economy design, and senior Unity execution.
+            live-service systems, economy design, and expert execution.
           </p>
         </div>
 

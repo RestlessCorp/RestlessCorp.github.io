@@ -10,9 +10,9 @@ const detailedServices = [
   {
     id: "unity-co-dev",
     title: "Unity Co-Development",
-    subtitle: "Senior Unity capacity that fits your production loop.",
+    subtitle: "Expert Unity capacity that fits your production loop.",
     description:
-      "We join existing teams as senior contributors, working inside your sprint cadence, coding standards, and review process.",
+      "We join existing teams as expert contributors, working inside your sprint cadence, coding standards, and review process.",
     highlights: ["Sprint integration", "Code review parity", "Fast ramp-up", "Lead-level support"],
     icon: Users,
   },
@@ -39,7 +39,7 @@ const detailedServices = [
     title: "Technical Architecture & Rescue",
     subtitle: "Critical systems work for projects under pressure.",
     description:
-      "We step into performance bottlenecks, unstable architecture, and release-critical systems when teams need senior technical direction fast.",
+      "We step into performance bottlenecks, unstable architecture, and release-critical systems when teams need expert technical direction fast.",
     highlights: ["Systems architecture", "Performance profiling", "Technical rescue", "Complex UI and tools"],
     icon: Layout,
   },
@@ -64,10 +64,10 @@ export default function ServicesPage() {
           <div className="max-w-3xl">
             <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">Services</span>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
-              Senior Unity support for the systems that decide shipping risk
+              Expert game development support for the systems that decide shipping risk
             </h1>
             <p className="text-xl text-text-muted leading-relaxed">
-              We help game teams add senior execution where architecture, connected systems,
+              We help game teams add expert execution where architecture, connected systems,
               performance, and release pressure can slow production down.
             </p>
           </div>
@@ -115,7 +115,7 @@ export default function ServicesPage() {
         <Container>
           <div className="max-w-3xl glass-panel rounded-lg p-10 md:p-12">
             <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">Engagement</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Bring in senior support where the roadmap is hardest</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Bring in expert support where the roadmap is hardest</h2>
             <p className="text-text-muted text-lg mb-8">
               Use us for embedded co-development, targeted rescue work, or a defined connected-systems scope.
             </p>

@@ -39,7 +39,7 @@ const caseStudies = [
 const engagementModels = [
   {
     title: "Embedded Co-Development",
-    description: "Senior developers who work inside your sprint loop and technical standards.",
+    description: "Expert developers who work inside your sprint loop and technical standards.",
   },
   {
     title: "Defined System Ownership",
@@ -63,7 +63,7 @@ export default function CaseStudiesPage() {
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">Proof that we can own the hard parts of production</h1>
             <p className="text-xl text-text-muted leading-relaxed">
               These examples show how we approach connected systems, platform delivery,
-              and production tooling with senior engineering ownership.
+              and production tooling with expert engineering ownership.
             </p>
           </div>
         </Container>
@@ -111,7 +111,7 @@ export default function CaseStudiesPage() {
         <Container className="max-w-5xl">
           <div className="max-w-2xl mb-10">
             <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">How we engage</span>
-            <h2 className="text-3xl font-bold mb-4 text-white">Flexible ways to use senior support</h2>
+            <h2 className="text-3xl font-bold mb-4 text-white">Flexible ways to use expert support</h2>
             <p className="text-text-muted text-lg">
               The work can be embedded, scoped, or surgical depending on where the risk sits.
             </p>

@@ -8,8 +8,8 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Something Is Cooking | Senior Unity Technical Partner",
-  description: "Senior Unity co-development for multiplayer systems, live-service backends, technical architecture, and production support.",
+  title: "Something Is Cooking | Expert Game Development Partner",
+  description: "Expert game development support for multiplayer systems, live-service backends, technical architecture, and production support.",
   keywords: [
     "Unity game development studio",
     "game co-development studio",

@@ -13,7 +13,7 @@ const principles = [
     icon: ShieldCheck,
   },
   {
-    title: "Senior Delivery",
+    title: "Expert Delivery",
     description: "We work with experienced developers who can contribute directly, communicate clearly, and own difficult systems.",
     icon: Users,
   },
@@ -33,7 +33,7 @@ export default function AboutPage() {
         <Container>
           <div className="max-w-3xl">
             <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">About</span>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">A senior-led Unity partner built around execution</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">An expert game development partner built around execution</h1>
             <p className="text-xl text-text-muted leading-relaxed">
               Something Is Cooking is a technical game development studio focused on co-development,
               connected systems, and the engineering work that tends to decide schedule risk.
@@ -73,7 +73,7 @@ export default function AboutPage() {
                 </div>
                 <div className="flex gap-4 p-4 border border-white/8 rounded-md bg-surface-1/30">
                   <Users className="w-5 h-5 text-accent-gold shrink-0" />
-                  <p className="text-sm text-text-muted">We work best with studios that need senior contributors rather than generic capacity.</p>
+                  <p className="text-sm text-text-muted">We work best with studios that need expert contributors rather than generic capacity.</p>
                 </div>
               </div>
             </div>
@@ -103,7 +103,7 @@ export default function AboutPage() {
             <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">Work with us</span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Start with the technical problem, not the sales call</h2>
             <p className="text-text-muted text-lg mb-8">
-              A short project brief is enough for us to understand the current build, platform targets, and where senior support is useful.
+              A short project brief is enough for us to understand the current build, platform targets, and where expert support is useful.
             </p>
             <Button size="lg" variant="premium" asChild>
               <Link href="/contact">Send Project Brief</Link>

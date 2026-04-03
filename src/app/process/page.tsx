@@ -45,7 +45,7 @@ const detailedSteps = [
 const values = [
   {
     title: "Accountability",
-    description: "Direct communication with senior contributors and clear ownership of the systems in scope.",
+    description: "Direct communication with expert contributors and clear ownership of the systems in scope.",
     icon: Shield,
   },
   {

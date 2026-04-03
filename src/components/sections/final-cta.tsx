@@ -14,7 +14,7 @@ export function FinalCTA() {
             <span className="text-xs font-bold uppercase tracking-widest">Next step</span>
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white tracking-tight">Need senior Unity support?</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white tracking-tight">Need expert game development support?</h2>
           <p className="text-text-muted text-lg md:text-xl mb-12 max-w-2xl mx-auto opacity-85">
             Send a short brief and we will review scope, technical risk,
             and where we can help first.

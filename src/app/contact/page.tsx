@@ -55,7 +55,7 @@ export default function ContactPage() {
             <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">Contact</span>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">Share the brief. We will start from the technical problem.</h1>
             <p className="text-xl text-text-muted leading-relaxed">
-              Use the form below to outline the game, platform targets, and the systems that need senior support.
+              Use the form below to outline the game, platform targets, and the systems that need expert support.
             </p>
           </div>
         </Container>

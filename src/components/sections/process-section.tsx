@@ -20,7 +20,7 @@ const steps = [
   },
   {
     title: "Execution & Flow",
-    description: "Continuous delivery with senior-level code quality and clear communication.",
+    description: "Continuous delivery with expert-level code quality and clear communication.",
     icon: Zap,
   },
   {
@@ -42,7 +42,7 @@ export function ProcessSection() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">Our <span className="text-primary italic">Production Workflow</span></h2>
           <p className="max-w-2xl mx-auto text-text-muted text-lg">
-            We operate with the discipline of a senior engineering shop, ensuring 
+            We operate with the discipline of an expert engineering shop, ensuring 
             reassurance and results at every phase of the project lifecycle.
           </p>
         </div>

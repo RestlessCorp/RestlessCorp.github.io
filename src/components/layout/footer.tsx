@@ -47,7 +47,7 @@ export function Footer() {
               <span className="text-foreground font-bold tracking-tight text-xl">Something Is Cooking</span>
             </Link>
             <p className="text-text-muted text-sm max-w-sm mb-6">
-              Senior Unity co-development for multiplayer systems, live-service backends,
+              Expert game development support for multiplayer systems, live-service backends,
               and performance-critical production work.
             </p>
             <div className="flex gap-4">
