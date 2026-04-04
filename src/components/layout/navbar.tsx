@@ -11,9 +11,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { name: "Services", href: "/services" },
-  { name: "Case Studies", href: "/case-studies" },
-  { name: "About", href: "/about" },
+  { name: "Expertise", href: "/#expertise" },
+  { name: "Work", href: "/#work" },
   { name: "Contact", href: "/contact" },
 ];
 

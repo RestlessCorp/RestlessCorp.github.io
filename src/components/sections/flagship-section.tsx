@@ -63,7 +63,7 @@ export function FlagshipSection() {
               </div>
             </div>
 
-            <Link href="/case-studies" className="text-sm font-semibold text-text-muted hover:text-foreground transition-colors">
+            <Link href="/#work" className="text-sm font-semibold text-text-muted hover:text-foreground transition-colors">
               View Case Studies
             </Link>
           </div>
