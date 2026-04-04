@@ -34,7 +34,7 @@ const caseStudies = [
 
 export function WorkSection() {
   return (
-    <section id="work" className="py-24 relative">
+    <section id="work" className="py-16 md:py-24 relative">
       <Container>
         <div className="max-w-3xl mb-16">
           <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">Case Studies</span>
@@ -47,8 +47,8 @@ export function WorkSection() {
 
         <div className="space-y-12">
           {caseStudies.map((study) => (
-            <Card key={study.id} className="p-8 md:p-10 border-white/5 bg-surface-2 hover:bg-surface-2/80 transition-colors">
-              <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_0.8fr] gap-10 items-center">
+            <Card key={study.id} className="p-6 md:p-10 border-white/5 bg-surface-2 hover:bg-surface-2/80 transition-colors">
+              <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_0.8fr] gap-8 md:gap-10 items-center">
                 <div>
                   <span className="inline-flex px-3 py-1 mb-5 text-xs font-bold uppercase tracking-widest text-accent-gold border border-accent-gold/20 rounded-full bg-accent-gold/8">
                     {study.category}

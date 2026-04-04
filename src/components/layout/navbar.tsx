@@ -22,8 +22,8 @@ export function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/82 backdrop-blur-md border-b border-white/8">
-      <Container className="flex items-center justify-between h-20">
-        <Link href="/" className="flex items-center gap-4 group">
+      <Container className="flex items-center justify-between h-16 md:h-20">
+        <Link href="/" className="flex items-center gap-2 sm:gap-4 group">
           <div className="relative w-12 h-12 transition-transform group-hover:scale-110">
             <img
               src="/logo.jpg"
@@ -32,8 +32,8 @@ export function Navbar() {
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-foreground font-bold tracking-tight leading-none text-xl">Something Is Cooking</span>
-            <span className="text-[10px] uppercase tracking-widest text-accent-gold/90 font-bold">Unity Technical Partner</span>
+            <span className="text-foreground font-bold tracking-tight leading-none text-base sm:text-xl truncate max-w-[150px] sm:max-w-none">Something Is Cooking</span>
+            <span className="text-[10px] uppercase tracking-widest text-accent-gold/90 font-bold truncate">Unity Technical Partner</span>
           </div>
         </Link>
 

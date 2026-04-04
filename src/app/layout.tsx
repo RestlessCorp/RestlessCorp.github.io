@@ -37,9 +37,9 @@ export default function RootLayout({
       lang="en"
       className={`${workSans.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-white">
-        {children}
-      </body>
+        <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-white overflow-x-hidden">
+          {children}
+        </body>
     </html>
   );
 }

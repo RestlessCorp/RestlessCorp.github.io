@@ -27,7 +27,7 @@ const expertise = [
 
 export function ExpertiseSection() {
   return (
-    <section id="expertise" className="py-24 relative overflow-hidden bg-surface-3/30 border-y border-white/5">
+    <section id="expertise" className="py-16 md:py-24 relative overflow-hidden bg-surface-3/30 border-y border-white/5">
       <Container>
         <div className="max-w-2xl mb-16">
           <span className="text-accent-gold font-bold uppercase tracking-widest text-xs mb-4 block">Our Expertise</span>

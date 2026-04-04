@@ -5,7 +5,7 @@ import { Shield, Cpu, Zap, Box } from "lucide-react";
 
 export function FlagshipSection() {
   return (
-    <section className="py-24 bg-surface-3/50 relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-surface-3/50 relative overflow-hidden">
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/20 blur-[120px] rounded-full -translate-y-1/2 -z-10" />
 
       <Container>
