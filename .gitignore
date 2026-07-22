@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Plaintext source of the status report — only the encrypted public/report.enc
+# is published. Regenerate with: node scripts/build-report.mjs
+/content
