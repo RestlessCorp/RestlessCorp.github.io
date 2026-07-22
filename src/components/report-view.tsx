@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Report } from "@/lib/report";
+import { Roadmap } from "@/components/roadmap";
 
 // Same colour grammar as the internal report: rose for what needs a decision,
 // amber for in flight, green for done, muted for later.
@@ -30,7 +31,9 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 export function ReportView({ report }: { report: Report }) {
-  const [tab, setTab] = useState<"report" | "board" | "questions">("report");
+  const [tab, setTab] = useState<
+    "report" | "board" | "roadmap" | "questions"
+  >("report");
   const { totals } = report;
 
   return (
@@ -62,6 +65,7 @@ export function ReportView({ report }: { report: Report }) {
           [
             ["report", "Звіт"],
             ["board", "Дошка"],
+            ["roadmap", "Roadmap"],
             ["questions", "Питання"],
           ] as const
         ).map(([key, label]) => (
@@ -206,6 +210,13 @@ export function ReportView({ report }: { report: Report }) {
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {tab === "roadmap" && (
+        <section className="mt-9">
+          <SectionTitle>Куди рухаємось</SectionTitle>
+          <Roadmap roadmap={report.roadmap} />
         </section>
       )}
 

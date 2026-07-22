@@ -20,6 +20,23 @@ export type Week = {
 
 export type KanbanItem = Entry & { who?: string };
 
+export type StageStatus = "done" | "current" | "next" | "planned";
+
+export type Stage = {
+  title: string;
+  status: StageStatus;
+  when: string;
+  text: string;
+  items: string[];
+};
+
+export type Track = {
+  id: string;
+  title: string;
+  subtitle: string;
+  stages: Stage[];
+};
+
 export type OpenQuestion = { title: string; who: string; text: string };
 export type ClosedQuestion = {
   title: string;
@@ -43,6 +60,7 @@ export type Report = {
   release: { title: string; note: string; items: Entry[] };
   kanban: { columns: KanbanColumn[] };
   questions: { open: OpenQuestion[]; closed: ClosedQuestion[] };
+  roadmap: { note: string; tracks: Track[] };
 };
 
 type Envelope = {
