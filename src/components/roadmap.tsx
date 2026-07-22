@@ -62,6 +62,12 @@ function StageRow({ stage, last }: { stage: Stage; last: boolean }) {
           </span>
         </div>
         <p className="mt-1 text-[0.9rem] text-ink-soft">{stage.text}</p>
+        {stage.needs && (
+          <p className="mt-2 flex items-start gap-1.5 text-[0.82rem] text-rose">
+            <span aria-hidden>▸</span>
+            <span>{stage.needs}</span>
+          </p>
+        )}
         <ul className="mt-3 flex flex-wrap gap-1.5 p-0">
           {stage.items.map((item) => (
             <li
@@ -113,6 +119,16 @@ export function Roadmap({ roadmap }: { roadmap: Report["roadmap"] }) {
                   />
                 ))}
               </div>
+
+              {track.note && (
+                <p className="mt-3 text-[0.85rem] text-ink-soft">{track.note}</p>
+              )}
+              {track.deadline && (
+                <p className="mt-3 rounded-xl border border-amber/50 bg-surface-2 px-3 py-2 text-[0.82rem]">
+                  <span className="font-bold text-amber">Дедлайн платформи. </span>
+                  {track.deadline}
+                </p>
+              )}
 
               <ol className="mt-6 grid list-none p-0">
                 {track.stages.map((stage, i) => (

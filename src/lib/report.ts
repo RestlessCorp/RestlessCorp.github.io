@@ -28,12 +28,17 @@ export type Stage = {
   when: string;
   text: string;
   items: string[];
+  /** what the stage waits on, when it is not just our own work */
+  needs?: string;
 };
 
 export type Track = {
   id: string;
   title: string;
   subtitle: string;
+  note?: string;
+  /** a date the platform imposes on us, not one we chose */
+  deadline?: string;
   stages: Stage[];
 };
 
