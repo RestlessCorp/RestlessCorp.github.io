@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Yoga Fusion — статус розробки">
+  <!-- The report's own motif: progress bars, longest on top. Ink tile, lime bars —
+       the two colours the report itself is built from.
+       The lower bars are dimmed rather than shortened only, so the mark still
+       reads as "progress" at 16px, where three equal lines would blur into one
+       block. Opacity kept above .35 for the same reason. -->
+  <rect width="32" height="32" rx="8" fill="#2a2418"/>
+  <rect x="7" y="9" width="18" height="3.8" rx="1.9" fill="#c9e64a"/>
+  <rect x="7" y="14.1" width="12" height="3.8" rx="1.9" fill="#c9e64a" opacity=".64"/>
+  <rect x="7" y="19.2" width="6.5" height="3.8" rx="1.9" fill="#c9e64a" opacity=".4"/>
+</svg>
