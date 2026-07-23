@@ -88,7 +88,10 @@ export function Roadmap({ roadmap }: { roadmap: Report["roadmap"] }) {
     <div className="mt-5">
       <p className="text-sm text-ink-soft">{roadmap.note}</p>
 
-      <div className="mt-7 grid gap-10 lg:grid-cols-2">
+      {/* Three tracks now, not two. On a wide screen they sit side by side, so
+          the roadmap breaks out past the article's reading width to give each
+          timeline room; below xl they stack two-up, then one. */}
+      <div className="mt-7 grid gap-10 sm:grid-cols-2 xl:-mx-24 xl:grid-cols-3">
         {roadmap.tracks.map((track) => {
           const done = track.stages.filter((s) => s.status === "done").length;
           return (
