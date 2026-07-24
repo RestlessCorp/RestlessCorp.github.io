@@ -126,6 +126,12 @@ export function Roadmap({ roadmap }: { roadmap: Report["roadmap"] }) {
               {track.note && (
                 <p className="mt-3 text-[0.85rem] text-ink-soft">{track.note}</p>
               )}
+              {track.priorityNote && (
+                <p className="mt-3 rounded-xl border border-line-strong bg-surface-2 px-3 py-2 text-[0.82rem]">
+                  <span className="font-bold">Пріоритет робіт. </span>
+                  {track.priorityNote}
+                </p>
+              )}
               {track.deadline && (
                 <p className="mt-3 rounded-xl border border-amber/50 bg-surface-2 px-3 py-2 text-[0.82rem]">
                   <span className="font-bold text-amber">Дедлайн платформи. </span>

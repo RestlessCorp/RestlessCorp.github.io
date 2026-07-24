@@ -37,6 +37,8 @@ export type Track = {
   title: string;
   subtitle: string;
   note?: string;
+  /** the order we agreed with the client, called out above the stages */
+  priorityNote?: string;
   /** a date the platform imposes on us, not one we chose */
   deadline?: string;
   stages: Stage[];
