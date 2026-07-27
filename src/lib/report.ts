@@ -5,54 +5,72 @@
 // types. A wrong passphrase fails at the AES-GCM tag check — there is no
 // separate "is the password right" branch to bypass.
 
-export type Entry = { title: string; text: string; tag?: string };
+import type { Localized } from "./i18n";
 
-export type Group = { title: string; items: Entry[] };
+export type Entry = {
+  title: Localized;
+  text: Localized;
+  tag?: Localized;
+};
+
+export type Group = { title: Localized; items: Entry[] };
 
 export type Week = {
   id: string;
-  label: string;
+  label: Localized;
   hours: number;
-  summary: string;
+  summary: Localized;
   groups: Group[];
-  notes?: string;
+  notes?: Localized;
 };
 
-export type KanbanItem = Entry & { who?: string };
+export type KanbanItem = Entry & { who?: Localized };
 
 export type StageStatus = "done" | "current" | "next" | "planned";
 
 export type Stage = {
-  title: string;
+  title: Localized;
   status: StageStatus;
-  when: string;
-  text: string;
-  items: string[];
+  when: Localized;
+  text: Localized;
+  items: Localized[];
   /** what the stage waits on, when it is not just our own work */
-  needs?: string;
+  needs?: Localized;
 };
 
 export type Track = {
   id: string;
-  title: string;
-  subtitle: string;
-  note?: string;
+  title: Localized;
+  subtitle: Localized;
+  note?: Localized;
   /** a date the platform imposes on us, not one we chose */
-  deadline?: string;
+  deadline?: Localized;
   stages: Stage[];
 };
 
-export type OpenQuestion = { title: string; who: string; text: string };
-export type ClosedQuestion = {
-  title: string;
-  decision: string;
-  result: string;
+export type OpenQuestion = {
+  title: Localized;
+  who: Localized;
+  text: Localized;
 };
-export type KanbanColumn = { id: string; title: string; items: KanbanItem[] };
+export type ClosedQuestion = {
+  title: Localized;
+  decision: Localized;
+  result: Localized;
+};
+export type KanbanColumn = {
+  id: string;
+  title: Localized;
+  items: KanbanItem[];
+  // An empty column reads as "nothing is happening", which is rarely what it
+  // means — usually the work in it just isn't for this audience yet. When a
+  // column can legitimately be empty, it says so in its own words.
+  empty?: Localized;
+};
 
 export type Report = {
   project: string;
-  subtitle: string;
+  subtitle: Localized;
   updatedAt: string;
   totals: {
     hoursTotal: number;
@@ -62,10 +80,10 @@ export type Report = {
     pending: number;
   };
   weeks: Week[];
-  release: { title: string; note: string; items: Entry[] };
+  release: { title: Localized; note: Localized; items: Entry[] };
   kanban: { columns: KanbanColumn[] };
   questions: { open: OpenQuestion[]; closed: ClosedQuestion[] };
-  roadmap: { note: string; tracks: Track[] };
+  roadmap: { note: Localized; tracks: Track[] };
 };
 
 type Envelope = {
