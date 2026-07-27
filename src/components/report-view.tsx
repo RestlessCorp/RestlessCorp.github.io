@@ -16,6 +16,11 @@ const COLUMN_TONE: Record<string, string> = {
   resolved: "text-ink-soft border-line-strong",
 };
 
+// Settled questions are history, not work: the pile grows for good and would
+// otherwise bury the three columns anyone actually opens the board for. It
+// stays one click away, with its count visible while closed.
+const COLLAPSED_COLUMNS = new Set(["resolved"]);
+
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="rounded-2xl border border-line bg-surface px-4 py-4">
@@ -45,6 +50,15 @@ export function ReportView({
   const [tab, setTab] = useState<
     "report" | "board" | "roadmap"
   >("report");
+  const [openColumns, setOpenColumns] = useState<ReadonlySet<string>>(
+    () => new Set(),
+  );
+  const toggleColumn = (id: string) =>
+    setOpenColumns((current) => {
+      const next = new Set(current);
+      if (!next.delete(id)) next.add(id);
+      return next;
+    });
   const { totals } = report;
   const copy = ui[lang];
 
@@ -191,14 +205,44 @@ export function ReportView({
           <SectionTitle>{copy.boardTitle}</SectionTitle>
           <p className="mt-3 text-sm text-ink-soft">{copy.boardDesc}</p>
           <div className="mt-6 grid gap-6 md:grid-cols-2">
-            {report.kanban.columns.map((column) => (
-              <div key={column.id}>
-                <h3 className="flex items-center gap-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-ink-soft">
+            {report.kanban.columns.map((column) => {
+              const collapsible = COLLAPSED_COLUMNS.has(column.id);
+              const open = !collapsible || openColumns.has(column.id);
+              const heading = (
+                <>
                   <span>{t(column.title, lang)}</span>
                   <span className="tabular-nums">{column.items.length}</span>
                   <span className="h-px flex-1 bg-line" />
+                </>
+              );
+              return (
+              <div key={column.id}>
+                <h3 className="text-[0.78rem] font-bold uppercase tracking-[0.14em] text-ink-soft">
+                  {collapsible ? (
+                    <button
+                      type="button"
+                      onClick={() => toggleColumn(column.id)}
+                      aria-expanded={open}
+                      aria-controls={`board-${column.id}`}
+                      className="flex w-full cursor-pointer items-center gap-2 text-left uppercase tracking-[0.14em] transition-colors hover:text-ink"
+                    >
+                      <span
+                        aria-hidden
+                        className="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-line-strong text-[0.9rem] leading-none"
+                      >
+                        {open ? "−" : "+"}
+                      </span>
+                      {heading}
+                    </button>
+                  ) : (
+                    <span className="flex items-center gap-2">{heading}</span>
+                  )}
                 </h3>
-                <div className="mt-3 grid gap-3">
+                <div
+                  id={`board-${column.id}`}
+                  hidden={!open}
+                  className="mt-3 grid gap-3"
+                >
                   {column.items.length === 0 && column.empty && (
                     <p className="rounded-2xl border border-dashed border-line px-4 py-4 text-[0.88rem] text-ink-soft">
                       {t(column.empty, lang)}
@@ -230,7 +274,8 @@ export function ReportView({
                   ))}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       )}
