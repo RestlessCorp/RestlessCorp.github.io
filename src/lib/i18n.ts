@@ -75,7 +75,6 @@ export const ui = {
     tabReport: "Звіт",
     tabBoard: "Дошка",
     tabRoadmap: "Roadmap",
-    tabQuestions: "Питання",
     weeksTitle: "По тижнях",
     weeksDesc: "Кожен тиждень — окремий блок із годинами. Найновіший зверху.",
     hoursSuffix: "год",
@@ -83,12 +82,10 @@ export const ui = {
     boardDesc:
       "Дошка оновлюється разом зі звітом. Ліворуч — те, що чекає вашого слова; далі — те, що робиться й що попереду.",
     roadmapTitle: "Куди рухаємось",
-    questionsTitle: "Питання до вас",
-    questionsDesc:
-      "Це не технічні задачі, а вибір, від якого залежить, як робити далі. Поки на них немає відповіді, відповідна робота стоїть.",
     closedQuestionsLabel: "Питання, які вже закриті",
     closedQuestionsDesc: "Історія рішень: що ви обрали і що з цього вийшло.",
     decisionLabel: "Рішення:",
+    priorityLabel: "Пріоритет робіт.",
     footerText: "сторінка статусу для команди",
     deadlineLabel: "Дедлайн платформи.",
     statusDone: "готово",
@@ -114,7 +111,6 @@ export const ui = {
     tabReport: "Report",
     tabBoard: "Board",
     tabRoadmap: "Roadmap",
-    tabQuestions: "Questions",
     weeksTitle: "By week",
     weeksDesc: "Each week is its own block with hours logged. Newest first.",
     hoursSuffix: "h",
@@ -122,12 +118,10 @@ export const ui = {
     boardDesc:
       "The board updates together with the report. On the left is what's waiting on your call; further along is what's being worked on and what's next.",
     roadmapTitle: "Where we're headed",
-    questionsTitle: "Questions for you",
-    questionsDesc:
-      "These aren't technical tasks — they're choices that shape how we proceed. Until they're answered, the related work is on hold.",
     closedQuestionsLabel: "Already-closed questions",
     closedQuestionsDesc: "A decision log: what you chose and what came of it.",
     decisionLabel: "Decision:",
+    priorityLabel: "Work priority.",
     footerText: "team status page",
     deadlineLabel: "Platform deadline.",
     statusDone: "done",

@@ -43,21 +43,15 @@ export type Track = {
   title: Localized;
   subtitle: Localized;
   note?: Localized;
+  /** the order we agreed with the client, called out above the stages */
+  priorityNote?: Localized;
   /** a date the platform imposes on us, not one we chose */
   deadline?: Localized;
   stages: Stage[];
 };
 
-export type OpenQuestion = {
-  title: Localized;
-  who: Localized;
-  text: Localized;
-};
-export type ClosedQuestion = {
-  title: Localized;
-  decision: Localized;
-  result: Localized;
-};
+// Open and closed questions used to be their own tab. They now live on the
+// board as columns like any other work, so there is one place to look.
 export type KanbanColumn = {
   id: string;
   title: Localized;
@@ -82,7 +76,6 @@ export type Report = {
   weeks: Week[];
   release: { title: Localized; note: Localized; items: Entry[] };
   kanban: { columns: KanbanColumn[] };
-  questions: { open: OpenQuestion[]; closed: ClosedQuestion[] };
   roadmap: { note: Localized; tracks: Track[] };
 };
 
