@@ -44,12 +44,6 @@ export type Track = {
   stages: Stage[];
 };
 
-export type OpenQuestion = { title: string; who: string; text: string };
-export type ClosedQuestion = {
-  title: string;
-  decision: string;
-  result: string;
-};
 export type KanbanColumn = { id: string; title: string; items: KanbanItem[] };
 
 export type Report = {
@@ -66,7 +60,6 @@ export type Report = {
   weeks: Week[];
   release: { title: string; note: string; items: Entry[] };
   kanban: { columns: KanbanColumn[] };
-  questions: { open: OpenQuestion[]; closed: ClosedQuestion[] };
   roadmap: { note: string; tracks: Track[] };
 };
 

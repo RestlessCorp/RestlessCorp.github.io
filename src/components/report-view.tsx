@@ -11,6 +11,7 @@ const COLUMN_TONE: Record<string, string> = {
   progress: "text-amber border-amber",
   next: "text-green border-green",
   later: "text-ink-soft border-line-strong",
+  resolved: "text-ink-soft border-line-strong",
 };
 
 function Stat({ value, label }: { value: string; label: string }) {
@@ -32,7 +33,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 export function ReportView({ report }: { report: Report }) {
   const [tab, setTab] = useState<
-    "report" | "board" | "roadmap" | "questions"
+    "report" | "board" | "roadmap"
   >("report");
   const { totals } = report;
 
@@ -66,7 +67,6 @@ export function ReportView({ report }: { report: Report }) {
             ["report", "Звіт"],
             ["board", "Дошка"],
             ["roadmap", "Roadmap"],
-            ["questions", "Питання"],
           ] as const
         ).map(([key, label]) => (
           <button
@@ -217,74 +217,6 @@ export function ReportView({ report }: { report: Report }) {
         <section className="mt-9">
           <SectionTitle>Куди рухаємось</SectionTitle>
           <Roadmap roadmap={report.roadmap} />
-        </section>
-      )}
-
-      {tab === "questions" && (
-        <section className="mt-9">
-          <SectionTitle>Питання до вас</SectionTitle>
-          <p className="mt-3 text-sm text-ink-soft">
-            Це не технічні задачі, а вибір, від якого залежить, як робити далі.
-            Поки на них немає відповіді, відповідна робота стоїть.
-          </p>
-
-          <div className="mt-5 grid gap-3">
-            {report.questions.open.map((q, i) => (
-              <article
-                key={q.title}
-                className="rounded-2xl border border-line border-l-[3px] border-l-rose bg-surface-2 px-5 py-4"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-bold">
-                    <span className="mr-2 text-ink-soft tabular-nums">
-                      {i + 1}.
-                    </span>
-                    {q.title}
-                  </h3>
-                  <span className="shrink-0 rounded-full border border-rose px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide text-rose">
-                    {q.who}
-                  </span>
-                </div>
-                <p className="mt-2 text-[0.93rem]">{q.text}</p>
-              </article>
-            ))}
-          </div>
-
-          {/* History: every decision the team has already made, with what came
-              of it. Folded away by default — it is for looking things up, not
-              for reading top to bottom. */}
-          <details className="mt-8 rounded-2xl border border-line bg-surface px-5 py-4">
-            <summary className="flex cursor-pointer items-center gap-3 font-bold">
-              <span
-                aria-hidden
-                className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink-soft text-sm leading-none"
-              >
-                +
-              </span>
-              <span>Питання, які вже закриті</span>
-              <span className="text-sm font-normal text-ink-soft tabular-nums">
-                {report.questions.closed.length}
-              </span>
-            </summary>
-            <p className="mt-3 text-sm text-ink-soft">
-              Історія рішень: що ви обрали і що з цього вийшло.
-            </p>
-            <div className="mt-4 grid gap-3">
-              {report.questions.closed.map((q) => (
-                <article
-                  key={q.title}
-                  className="rounded-xl border-l-2 border-green bg-surface-2 px-4 py-3"
-                >
-                  <h3 className="font-bold">{q.title}</h3>
-                  <p className="mt-1 text-[0.9rem]">
-                    <span className="font-bold text-green">Рішення: </span>
-                    {q.decision}
-                  </p>
-                  <p className="mt-1 text-[0.9rem] text-ink-soft">{q.result}</p>
-                </article>
-              ))}
-            </div>
-          </details>
         </section>
       )}
 
