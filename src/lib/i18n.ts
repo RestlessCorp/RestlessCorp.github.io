@@ -43,7 +43,12 @@ export function useLang(): [Lang, (lang: Lang) => void] {
 
   useEffect(() => {
     const saved = window.localStorage.getItem(LANG_KEY);
-    if (saved === "uk" || saved === "en") setLangState(saved);
+    if (saved === "uk" || saved === "en") {
+      // Читаємо мову після гідрації: lazy initializer дав би серверу UK, а браузеру
+      // збережену EN і створив би різну першу розмітку.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLangState(saved);
+    }
   }, []);
 
   useEffect(() => {
