@@ -23,7 +23,12 @@ export function Gate() {
     setBusy(true);
     setError(null);
     try {
-      const envelope = await fetch("report.enc").then((r) => {
+      // `no-store` тут не перестраховка. GitHub Pages віддає report.enc з
+      // `Cache-Control: max-age=600`, тож браузер, який уже відкривав звіт,
+      // до десяти хвилин показував би стару версію — і саме в ті хвилини,
+      // коли людині сказали «звіт оновлено, подивись». Звіт маленький і
+      // читається раз на день; свіжість тут дорожча за економію запиту.
+      const envelope = await fetch("report.enc", { cache: "no-store" }).then((r) => {
         if (!r.ok) throw new Error("report.enc " + r.status);
         return r.json();
       });
