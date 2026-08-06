@@ -38,6 +38,31 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Скільки релізів показуємо згорнутими. Список росте назавжди — за пів місяця
+// він став довшим за все інше на сторінці разом узяте, і найсвіжіше (те, заради
+// чого сюди й заходять) тонуло в історії.
+const RELEASE_PREVIEW = 4;
+
+// Один рядок блоку «Зараз»: підпис ліворуч, суть праворуч.
+function NowRow({
+  label,
+  children,
+  tone = "text-ink",
+}: {
+  label: string;
+  children: React.ReactNode;
+  tone?: string;
+}) {
+  return (
+    <div className="flex flex-col gap-1 py-3 sm:flex-row sm:gap-4">
+      <div className="shrink-0 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-ink-soft sm:w-44 sm:pt-0.5">
+        {label}
+      </div>
+      <div className={"text-[0.95rem] " + tone}>{children}</div>
+    </div>
+  );
+}
+
 export function ReportView({
   report,
   lang,
@@ -53,6 +78,7 @@ export function ReportView({
   const [openColumns, setOpenColumns] = useState<ReadonlySet<string>>(
     () => new Set(),
   );
+  const [allReleases, setAllReleases] = useState(false);
   const toggleColumn = (id: string) =>
     setOpenColumns((current) => {
       const next = new Set(current);
@@ -61,6 +87,18 @@ export function ReportView({
     });
   const { totals } = report;
   const copy = ui[lang];
+
+  // Блок «Зараз» збирається з тієї ж дошки, а не дублюється в даних: одне
+  // джерело правди, тож він не може розійтись із колонками.
+  const columnById = (id: string) =>
+    report.kanban.columns.find((c) => c.id === id);
+  const inProgress = columnById("progress")?.items ?? [];
+  const waiting = columnById("decision")?.items ?? [];
+  const latestRelease = report.release.items[0];
+  const visibleReleases = allReleases
+    ? report.release.items
+    : report.release.items.slice(0, RELEASE_PREVIEW);
+  const hiddenReleases = report.release.items.length - visibleReleases.length;
 
   return (
     <div className="mx-auto max-w-4xl px-5 pb-24 pt-10 sm:pt-14">
@@ -83,10 +121,13 @@ export function ReportView({
           Половина зробленого в ТЗ не значилась узагалі (імпорт розкладу
           текстом, власна панель, аналітика воронки), а частина пунктів ТЗ
           втратила сенс. Що лишилось із нього — видно на дошці. */}
+      {/* «Чекає викочування: 0» місяцями показувало нуль і нічого не
+          повідомляло. Замість нього — кількість питань, що чекають слова
+          команди: єдина цифра на сторінці, яка вимагає їхньої дії. */}
       <div className="mt-8 grid grid-cols-3 gap-3">
         <Stat value={String(totals.hoursTotal)} label={copy.statHoursTotal} />
         <Stat value={String(totals.shipped)} label={copy.statShipped} />
-        <Stat value={String(totals.pending)} label={copy.statPending} />
+        <Stat value={String(waiting.length)} label={copy.statDecisions} />
       </div>
 
       <nav className="mt-9 flex gap-2 border-b border-line" role="tablist">
@@ -116,13 +157,56 @@ export function ReportView({
 
       {tab === "report" && (
         <>
-          <section className="mt-9">
+          {/* Головне питання, з яким сюди заходять, — «що у нас зараз».
+              Раніше відповідь треба було збирати самому з трьох вкладок:
+              згори лежав список релізів на 58 карток, а те, що робиться
+              просто зараз, ховалось на «Дошці». */}
+          <section className="mt-9 rounded-2xl border border-line bg-surface px-5 py-3">
+            <div className="flex items-baseline justify-between gap-3 border-b border-line pb-3">
+              <h2 className="display text-xl">{copy.nowTitle}</h2>
+              <button
+                type="button"
+                onClick={() => setTab("board")}
+                className="text-sm font-bold text-green hover:underline"
+              >
+                {copy.nowOpenBoard}
+              </button>
+            </div>
+
+            {inProgress.length > 0 && (
+              <NowRow label={copy.nowInProgress}>
+                <ul className="grid list-none gap-1 p-0">
+                  {inProgress.map((item) => (
+                    <li key={t(item.title, lang)}>{t(item.title, lang)}</li>
+                  ))}
+                </ul>
+              </NowRow>
+            )}
+
+            {waiting.length > 0 && (
+              <NowRow label={copy.nowWaiting} tone="text-rose">
+                <ul className="grid list-none gap-1 p-0">
+                  {waiting.map((item) => (
+                    <li key={t(item.title, lang)}>{t(item.title, lang)}</li>
+                  ))}
+                </ul>
+              </NowRow>
+            )}
+
+            {latestRelease && (
+              <NowRow label={copy.nowLatest}>
+                {t(latestRelease.title, lang)}
+              </NowRow>
+            )}
+          </section>
+
+          <section className="mt-12">
             <SectionTitle>{t(report.release.title, lang)}</SectionTitle>
             <p className="mt-3 text-sm text-ink-soft">
               {t(report.release.note, lang)}
             </p>
             <div className="mt-5 grid gap-3">
-              {report.release.items.map((item) => (
+              {visibleReleases.map((item) => (
                 <article
                   key={t(item.title, lang)}
                   className="rounded-2xl border border-line border-l-[3px] border-l-amber bg-surface-2 px-5 py-4"
@@ -132,6 +216,17 @@ export function ReportView({
                 </article>
               ))}
             </div>
+            {report.release.items.length > RELEASE_PREVIEW && (
+              <button
+                type="button"
+                onClick={() => setAllReleases((open) => !open)}
+                className="mt-4 w-full rounded-2xl border border-line px-5 py-3 text-sm font-bold text-ink-soft hover:text-ink"
+              >
+                {allReleases
+                  ? copy.releaseShowLess
+                  : `${copy.releaseShowAll} (${hiddenReleases})`}
+              </button>
+            )}
           </section>
 
           <section className="mt-12">
