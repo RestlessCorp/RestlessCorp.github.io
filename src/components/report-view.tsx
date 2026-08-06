@@ -79,14 +79,14 @@ export function ReportView({
         </p>
       </header>
 
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {/* Прогрес по початковому ТЗ прибраний: він перестав описувати роботу.
+          Половина зробленого в ТЗ не значилась узагалі (імпорт розкладу
+          текстом, власна панель, аналітика воронки), а частина пунктів ТЗ
+          втратила сенс. Що лишилось із нього — видно на дошці. */}
+      <div className="mt-8 grid grid-cols-3 gap-3">
         <Stat value={String(totals.hoursTotal)} label={copy.statHoursTotal} />
         <Stat value={String(totals.shipped)} label={copy.statShipped} />
         <Stat value={String(totals.pending)} label={copy.statPending} />
-        <Stat
-          value={`${totals.tzDone}/${totals.tzTotal}`}
-          label={copy.statTzDone}
-        />
       </div>
 
       <nav className="mt-9 flex gap-2 border-b border-line" role="tablist">
@@ -204,6 +204,13 @@ export function ReportView({
         <section className="mt-9">
           <SectionTitle>{copy.boardTitle}</SectionTitle>
           <p className="mt-3 text-sm text-ink-soft">{copy.boardDesc}</p>
+          {/* Пояснення до дошки — звідки взялись картки й чому зник прогрес
+              по ТЗ. Без нього зміна в шапці виглядала б як пропажа. */}
+          {report.kanban.note && (
+            <p className="mt-3 text-sm text-ink-soft">
+              {t(report.kanban.note, lang)}
+            </p>
+          )}
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             {report.kanban.columns.map((column) => {
               const collapsible = COLLAPSED_COLUMNS.has(column.id);

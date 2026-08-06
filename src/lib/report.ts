@@ -75,7 +75,7 @@ export type Report = {
   };
   weeks: Week[];
   release: { title: Localized; note: Localized; items: Entry[] };
-  kanban: { columns: KanbanColumn[] };
+  kanban: { note?: Localized; columns: KanbanColumn[] };
   roadmap: { note: Localized; tracks: Track[] };
 };
 
