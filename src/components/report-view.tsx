@@ -212,7 +212,9 @@ export function ReportView({
                   className="rounded-2xl border border-line border-l-[3px] border-l-amber bg-surface-2 px-5 py-4"
                 >
                   <h3 className="font-bold">{t(item.title, lang)}</h3>
-                  <p className="mt-2 text-[0.93rem]">{t(item.text, lang)}</p>
+                  <p className="mt-2 whitespace-pre-line text-[0.93rem]">
+                    {t(item.text, lang)}
+                  </p>
                 </article>
               ))}
             </div>
@@ -247,7 +249,7 @@ export function ReportView({
                       {week.hours} {copy.hoursSuffix}
                     </span>
                   </summary>
-                  <p className="mt-4 text-[0.95rem]">
+                  <p className="mt-4 whitespace-pre-line text-[0.95rem]">
                     {t(week.summary, lang)}
                   </p>
                   {week.groups.map((group) => (
@@ -275,7 +277,7 @@ export function ReportView({
                                 </span>
                               )}
                             </div>
-                            <p className="mt-1 text-[0.9rem] text-ink-soft">
+                            <p className="mt-1 whitespace-pre-line text-[0.9rem] text-ink-soft">
                               {t(entry.text, lang)}
                             </p>
                           </li>
@@ -369,7 +371,7 @@ export function ReportView({
                           </span>
                         )}
                       </div>
-                      <p className="mt-2 text-[0.9rem] text-ink-soft">
+                      <p className="mt-2 whitespace-pre-line text-[0.9rem] text-ink-soft">
                         {t(item.text, lang)}
                       </p>
                     </article>

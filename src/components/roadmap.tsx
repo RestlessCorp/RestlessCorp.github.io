@@ -71,7 +71,7 @@ function StageRow({
             {copy[tone.labelKey]} · {t(stage.when, lang)}
           </span>
         </div>
-        <p className="mt-1 text-[0.9rem] text-ink-soft">
+        <p className="mt-1 whitespace-pre-line text-[0.9rem] text-ink-soft">
           {t(stage.text, lang)}
         </p>
         {stage.needs && (
@@ -145,7 +145,7 @@ export function Roadmap({
               </div>
 
               {track.note && (
-                <p className="mt-3 text-[0.85rem] text-ink-soft">
+                <p className="mt-3 whitespace-pre-line text-[0.85rem] text-ink-soft">
                   {t(track.note, lang)}
                 </p>
               )}
