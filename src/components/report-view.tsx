@@ -6,20 +6,12 @@ import { Roadmap } from "@/components/roadmap";
 import { t, ui, type Lang } from "@/lib/i18n";
 import { LangSwitch } from "@/components/lang-switch";
 
-// Same colour grammar as the internal report: rose for what needs a decision,
-// amber for in flight, green for done, muted for later.
+// Same colour grammar as the internal report: amber for in flight and green
+// for concrete work that comes next.
 const COLUMN_TONE: Record<string, string> = {
-  decision: "text-rose border-rose",
   progress: "text-amber border-amber",
   next: "text-green border-green",
-  later: "text-ink-soft border-line-strong",
-  resolved: "text-ink-soft border-line-strong",
 };
-
-// Settled questions are history, not work: the pile grows for good and would
-// otherwise bury the three columns anyone actually opens the board for. It
-// stays one click away, with its count visible while closed.
-const COLLAPSED_COLUMNS = new Set(["resolved"]);
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
@@ -75,16 +67,7 @@ export function ReportView({
   const [tab, setTab] = useState<
     "report" | "board" | "roadmap"
   >("report");
-  const [openColumns, setOpenColumns] = useState<ReadonlySet<string>>(
-    () => new Set(),
-  );
   const [allReleases, setAllReleases] = useState(false);
-  const toggleColumn = (id: string) =>
-    setOpenColumns((current) => {
-      const next = new Set(current);
-      if (!next.delete(id)) next.add(id);
-      return next;
-    });
   const { totals } = report;
   const copy = ui[lang];
 
@@ -93,7 +76,7 @@ export function ReportView({
   const columnById = (id: string) =>
     report.kanban.columns.find((c) => c.id === id);
   const inProgress = columnById("progress")?.items ?? [];
-  const waiting = columnById("decision")?.items ?? [];
+  const next = columnById("next")?.items ?? [];
   const latestRelease = report.release.items[0];
   const visibleReleases = allReleases
     ? report.release.items
@@ -121,13 +104,13 @@ export function ReportView({
           Половина зробленого в ТЗ не значилась узагалі (імпорт розкладу
           текстом, власна панель, аналітика воронки), а частина пунктів ТЗ
           втратила сенс. Що лишилось із нього — видно на дошці. */}
-      {/* «Чекає викочування: 0» місяцями показувало нуль і нічого не
-          повідомляло. Замість нього — кількість питань, що чекають слова
-          команди: єдина цифра на сторінці, яка вимагає їхньої дії. */}
       <div className="mt-8 grid grid-cols-3 gap-3">
         <Stat value={String(totals.hoursTotal)} label={copy.statHoursTotal} />
         <Stat value={String(totals.shipped)} label={copy.statShipped} />
-        <Stat value={String(waiting.length)} label={copy.statDecisions} />
+        <Stat
+          value={String(inProgress.length + next.length)}
+          label={copy.statActive}
+        />
       </div>
 
       <nav className="mt-9 flex gap-2 border-b border-line" role="tablist">
@@ -183,10 +166,10 @@ export function ReportView({
               </NowRow>
             )}
 
-            {waiting.length > 0 && (
-              <NowRow label={copy.nowWaiting} tone="text-rose">
+            {next.length > 0 && (
+              <NowRow label={copy.nowNext} tone="text-green">
                 <ul className="grid list-none gap-1 p-0">
-                  {waiting.map((item) => (
+                  {next.map((item) => (
                     <li key={t(item.title, lang)}>{t(item.title, lang)}</li>
                   ))}
                 </ul>
@@ -313,8 +296,6 @@ export function ReportView({
           )}
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             {report.kanban.columns.map((column) => {
-              const collapsible = COLLAPSED_COLUMNS.has(column.id);
-              const open = !collapsible || openColumns.has(column.id);
               const heading = (
                 <>
                   <span>{t(column.title, lang)}</span>
@@ -325,29 +306,10 @@ export function ReportView({
               return (
               <div key={column.id}>
                 <h3 className="text-[0.78rem] font-bold uppercase tracking-[0.14em] text-ink-soft">
-                  {collapsible ? (
-                    <button
-                      type="button"
-                      onClick={() => toggleColumn(column.id)}
-                      aria-expanded={open}
-                      aria-controls={`board-${column.id}`}
-                      className="flex w-full cursor-pointer items-center gap-2 text-left uppercase tracking-[0.14em] transition-colors hover:text-ink"
-                    >
-                      <span
-                        aria-hidden
-                        className="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-line-strong text-[0.9rem] leading-none"
-                      >
-                        {open ? "−" : "+"}
-                      </span>
-                      {heading}
-                    </button>
-                  ) : (
-                    <span className="flex items-center gap-2">{heading}</span>
-                  )}
+                  <span className="flex items-center gap-2">{heading}</span>
                 </h3>
                 <div
                   id={`board-${column.id}`}
-                  hidden={!open}
                   className="mt-3 grid gap-3"
                 >
                   {column.items.length === 0 && column.empty && (
