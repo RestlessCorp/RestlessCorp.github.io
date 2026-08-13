@@ -262,9 +262,12 @@ export function ReportView({
                         <span className="h-px flex-1 bg-line" />
                       </h4>
                       <ul className="mt-3 grid list-none gap-2 p-0">
-                        {group.items.map((entry) => (
+                        {group.items.map((entry, entryIndex) => (
                           <li
-                            key={t(entry.title, lang)}
+                            key={
+                              t(entry.title, lang) ||
+                              `${week.id}-${t(group.title, lang)}-${entryIndex}`
+                            }
                             className="rounded-xl bg-surface-2 px-4 py-3"
                           >
                             <div className="flex items-start justify-between gap-3">
