@@ -1,0 +1,10 @@
+---
+description: Mandatory source-backed report workflow
+alwaysApply: true
+---
+
+Read and follow `D:\Unity Projects\AGENTS.md` and this repository's
+`AGENTS.md`. Never edit ignored `content/report.json` as canonical source.
+Never claim `done/live` without deployment lineage and smoke, never embed a
+passphrase, and never push `main` without Andriy's explicit publication
+approval.
