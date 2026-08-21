@@ -1,8 +1,11 @@
 import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const RELEASE_STATE_REVISION = /^yoga-fusion\/release-state@(\d{4}-\d{2}-\d{2})$/;
+const REPOSITORY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const SOURCE_MANIFEST = resolve(REPOSITORY_ROOT, "report-source.manifest.json");
 
 function assert(condition, message) {
   if (!condition) throw new Error(`Report validation failed: ${message}`);
@@ -17,29 +20,51 @@ function assertUnique(values, label) {
   }
 }
 
-export function resolveReportSource() {
-  return resolve(
-    process.env.REPORT_SOURCE_PATH ||
-      resolve(process.cwd(), "..", "yoga-fusion", "report-source", "report.json"),
+function readSourceManifest(manifestPath) {
+  let manifest;
+  try {
+    manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+  } catch (error) {
+    throw new Error(
+      `Report validation failed: cannot read source manifest ${manifestPath}: ${error.message}`,
+    );
+  }
+  assert(
+    typeof manifest.defaultLocalPath === "string" && manifest.defaultLocalPath.trim().length > 0,
+    "report-source.manifest.json must define defaultLocalPath",
   );
+  return manifest;
 }
 
-export function loadAndValidateReport(sourcePath = resolveReportSource()) {
-  assert(existsSync(sourcePath), `canonical source not found at ${sourcePath}`);
+export function resolveReportSource({
+  env = process.env,
+  manifestPath = SOURCE_MANIFEST,
+  cwd = process.cwd(),
+} = {}) {
+  const explicitPath = env.REPORT_SOURCE_PATH?.trim();
+  if (explicitPath) return resolve(cwd, explicitPath);
 
-  let report;
-  try {
-    report = JSON.parse(readFileSync(sourcePath, "utf8"));
-  } catch (error) {
-    throw new Error(`Report validation failed: cannot parse ${sourcePath}: ${error.message}`);
-  }
+  const manifest = readSourceManifest(manifestPath);
+  return resolve(dirname(manifestPath), manifest.defaultLocalPath);
+}
 
+export function validateReport(report) {
   assert(report && typeof report === "object", "root must be an object");
   assert(ISO_DATE.test(report.updatedAt), "updatedAt must be YYYY-MM-DD");
   assert(ISO_DATE.test(report.sourceAsOf), "sourceAsOf must be YYYY-MM-DD");
   assert(report.sourceAsOf <= report.updatedAt, "sourceAsOf cannot be newer than updatedAt");
-  assert(typeof report.sourceRevision === "string" && report.sourceRevision.length > 0,
-    "sourceRevision is required");
+  const sourceRevision =
+    typeof report.sourceRevision === "string"
+      ? report.sourceRevision.match(RELEASE_STATE_REVISION)
+      : null;
+  assert(
+    sourceRevision,
+    "sourceRevision must be yoga-fusion/release-state@YYYY-MM-DD",
+  );
+  assert(
+    sourceRevision[1] === report.sourceAsOf,
+    "sourceRevision date must match sourceAsOf",
+  );
   assert(typeof report.statusSource === "string" && report.statusSource.length > 0,
     "statusSource is required");
 
@@ -82,6 +107,20 @@ export function loadAndValidateReport(sourcePath = resolveReportSource()) {
   assert(!/teacher management with photos[^.]*live/i.test(platform?.priorityNote?.en || ""),
     "platform priority note still claims teacher management is live");
 
+  return report;
+}
+
+export function loadAndValidateReport(sourcePath = resolveReportSource()) {
+  assert(existsSync(sourcePath), `canonical source not found at ${sourcePath}`);
+
+  let report;
+  try {
+    report = JSON.parse(readFileSync(sourcePath, "utf8"));
+  } catch (error) {
+    throw new Error(`Report validation failed: cannot parse ${sourcePath}: ${error.message}`);
+  }
+
+  validateReport(report);
   return { report, sourcePath };
 }
 

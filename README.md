@@ -17,12 +17,26 @@
 
 1. Оновити private `report-source/report.json` в окремій гілці й переглянути
    звичайний Git diff.
-2. У PowerShell вказати source і запустити валідацію:
+2. У PowerShell запустити валідацію. На цій робочій машині безпечний default
+   береться з `report-source.manifest.json` і веде у dedicated private worktree
+   `yoga-fusion/.worktrees/workspace-report-source/report-source/report.json`:
 
    ```powershell
-   $env:REPORT_SOURCE_PATH = 'D:\Unity Projects\yoga-fusion\report-source\report.json'
    npm run validate:report
    ```
+
+   Для іншого checkout явно передати versioned source; явний шлях має пріоритет
+   над локальним default:
+
+   ```powershell
+   $env:REPORT_SOURCE_PATH = 'D:\private-worktree\report-source\report.json'
+   npm run validate:report
+   Remove-Item Env:REPORT_SOURCE_PATH
+   ```
+
+   Validator також вимагає простежуваний
+   `sourceRevision: yoga-fusion/release-state@YYYY-MM-DD`; його дата має
+   збігатися з `sourceAsOf` у звіті.
 
 3. Передати новий пароль лише через env (щонайменше 16 символів) і зібрати:
 
