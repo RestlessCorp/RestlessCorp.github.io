@@ -29,9 +29,11 @@
 1. Окремий worktree/branch, task claim через Yoga `scripts/ai-work.ps1`.
 2. Змінити private `report-source/report.json`.
 3. Запустити `npm run validate:report` із `REPORT_SOURCE_PATH`, потім
-   `npm run report` із новим `REPORT_PASSPHRASE` довжиною щонайменше 16 символів.
+   `npm run report` із чинним погодженим командним `REPORT_PASSPHRASE`.
+   Не ротувати й не замінювати пароль без окремої прямої команди Andriy.
 4. Переглянути diff private source і public encrypted artifact.
 5. Пуш `main` цього repo автоматично публікує GitHub Pages, тому commit/push
    зашифрованого звіту — лише після прямого підтвердження Andriy.
 
 Пароля або fallback у коді не може бути. Значення env не читати й не виводити.
+Технічне оновлення звіту саме по собі не є дозволом змінювати пароль.

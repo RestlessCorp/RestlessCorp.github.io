@@ -37,7 +37,21 @@ function validReport() {
     weeks: [{ id: "2026-08-17", hours: 1 }],
     facts: {
       adminScreenCount: 18,
-      teacherEditor: { state: "regressed" },
+      productionRelease: {
+        state: "production_verified",
+        verifiedAt: "2026-08-21",
+        sourceSha: "d38676a9e969e77325cea98c0228367fd9d2e922",
+        siteDeploymentId: "dpl_site123",
+        adminDeploymentId: "dpl_admin123",
+        bffDeploymentId: "dpl_bff123",
+      },
+      teacherEditor: {
+        state: "production_verified",
+        currentRouteStatus: 401,
+        recoveredSourceSha: "d38676a9e969e77325cea98c0228367fd9d2e922",
+        recoveredAdminDeploymentId: "dpl_admin123",
+        verifiedAt: "2026-08-21",
+      },
     },
     kanban: {
       columns: [
@@ -46,8 +60,19 @@ function validReport() {
           items: [
             {
               title: {
-                uk: "Відновлення редактора викладачів",
-                en: "Teacher editor recovery",
+                uk: "Мобільний застосунок",
+                en: "Mobile app",
+              },
+            },
+          ],
+        },
+        {
+          id: "next",
+          items: [
+            {
+              title: {
+                uk: "Практики, напрями й картинки",
+                en: "Classes, disciplines and images",
               },
             },
           ],
@@ -58,12 +83,18 @@ function validReport() {
       tracks: [
         {
           id: "platform",
-          priorityNote: { uk: "Відновлення триває", en: "Recovery in progress" },
+          priorityNote: {
+            uk: "Редактор production перевірено",
+            en: "Teacher editor production verified",
+          },
           stages: [
             {
               title: { uk: "Викладачі", en: "Teachers" },
-              status: "current",
-              when: { uk: "регресія", en: "regression" },
+              status: "done",
+              when: {
+                uk: "регресія 15–20 серпня · відновлено 21 серпня",
+                en: "regression August 15–20 · recovered August 21",
+              },
             },
           ],
         },
@@ -128,5 +159,36 @@ test("sourceRevision date must match sourceAsOf", () => {
   assert.throws(
     () => validateReport(report),
     /sourceRevision date must match sourceAsOf/,
+  );
+});
+
+test("teacher recovery evidence must point to the production deployment", () => {
+  const report = validReport();
+  report.facts.teacherEditor.recoveredAdminDeploymentId = "dpl_other";
+
+  assert.throws(
+    () => validateReport(report),
+    /teacher recovery deployment must match the production admin deployment/,
+  );
+});
+
+test("a completed recovery cannot remain in the in-progress kanban", () => {
+  const report = validReport();
+  report.kanban.columns[0].items[0].title.en = "Teacher editor recovery";
+
+  assert.throws(
+    () => validateReport(report),
+    /completed teacher recovery cannot remain in the in-progress kanban/,
+  );
+});
+
+test("the roadmap preserves the regression while recording recovery", () => {
+  const report = validReport();
+  const teacher = report.roadmap.tracks[0].stages[0];
+  teacher.when = { uk: "відновлено", en: "recovered" };
+
+  assert.throws(
+    () => validateReport(report),
+    /must preserve the historical regression in English/,
   );
 });

@@ -15,17 +15,11 @@
 
 import { writeFileSync, mkdirSync } from "node:fs";
 import { webcrypto as crypto } from "node:crypto";
+import { requireReportPassphrase } from "./report-passphrase.mjs";
 import { loadAndValidateReport } from "./validate-report.mjs";
 
-const PASSPHRASE = process.env.REPORT_PASSPHRASE;
+const PASSPHRASE = requireReportPassphrase();
 const ITERATIONS = 300_000;
-
-if (!PASSPHRASE) {
-  throw new Error("REPORT_PASSPHRASE is required; there is no repository fallback.");
-}
-if (PASSPHRASE.length < 16) {
-  throw new Error("REPORT_PASSPHRASE must be at least 16 characters.");
-}
 
 const { report: source, sourcePath } = loadAndValidateReport();
 const plaintext = new TextEncoder().encode(JSON.stringify(source));

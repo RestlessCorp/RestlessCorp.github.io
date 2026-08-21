@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const RELEASE_STATE_REVISION = /^yoga-fusion\/release-state@(\d{4}-\d{2}-\d{2})$/;
+const COMMIT_SHA = /^[0-9a-f]{40}$/;
+const DEPLOYMENT_ID = /^dpl_[A-Za-z0-9]+$/;
 const REPOSITORY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SOURCE_MANIFEST = resolve(REPOSITORY_ROOT, "report-source.manifest.json");
 
@@ -90,22 +92,57 @@ export function validateReport(report) {
   assert(serialized.includes("18 розділів") && serialized.includes("18 sections"),
     "UA and EN admin-screen statements must both match facts.adminScreenCount");
 
+  const productionRelease = report.facts?.productionRelease;
+  assert(productionRelease?.state === "production_verified",
+    "production release must be production_verified");
+  assert(productionRelease?.verifiedAt === report.sourceAsOf,
+    "production release verification date must match sourceAsOf");
+  assert(COMMIT_SHA.test(productionRelease?.sourceSha || ""),
+    "production release must carry a full source SHA");
+  for (const field of ["siteDeploymentId", "adminDeploymentId", "bffDeploymentId"]) {
+    assert(DEPLOYMENT_ID.test(productionRelease?.[field] || ""),
+      `production release ${field} must be a Vercel deployment id`);
+  }
+
   const teacherState = report.facts?.teacherEditor?.state;
-  assert(teacherState === "regressed", "teacher editor must remain regressed until production recovery");
+  assert(teacherState === "production_verified",
+    "teacher editor must match the production-verified release state");
+  assert(report.facts?.teacherEditor?.currentRouteStatus === 401,
+    "teacher editor must carry the verified unauthenticated 401 contract");
+  assert(report.facts?.teacherEditor?.recoveredSourceSha === productionRelease.sourceSha,
+    "teacher recovery source must match the production release source");
+  assert(
+    report.facts?.teacherEditor?.recoveredAdminDeploymentId ===
+      productionRelease.adminDeploymentId,
+    "teacher recovery deployment must match the production admin deployment",
+  );
+  assert(report.facts?.teacherEditor?.verifiedAt === productionRelease.verifiedAt,
+    "teacher recovery verification date must match the production release");
   const platform = tracks.find((track) => track.id === "platform");
   const teacherStage = platform?.stages?.find((stage) => stage.title?.en === "Teachers");
   assert(teacherStage, "platform Teachers stage is missing");
-  assert(teacherStage.status === "current", "regressed Teachers stage cannot be marked done");
+  assert(teacherStage.status === "done",
+    "production-verified Teachers stage must be marked done");
+  assert(/recover/i.test(teacherStage.when?.en || ""),
+    "Teachers stage must state the production recovery in English");
+  assert(/віднов/i.test(teacherStage.when?.uk || ""),
+    "Teachers stage must state the production recovery in Ukrainian");
   assert(/regress/i.test(teacherStage.when?.en || ""),
-    "Teachers stage must state the current regression in English");
+    "Teachers stage must preserve the historical regression in English");
   assert(/регрес/i.test(teacherStage.when?.uk || ""),
-    "Teachers stage must state the current regression in Ukrainian");
+    "Teachers stage must preserve the historical regression in Ukrainian");
 
   const progress = columns.find((column) => column.id === "progress");
-  assert(progress?.items?.some((item) => /teacher editor recovery/i.test(item.title?.en || "")),
-    "current kanban must contain teacher editor recovery");
-  assert(!/teacher management with photos[^.]*live/i.test(platform?.priorityNote?.en || ""),
-    "platform priority note still claims teacher management is live");
+  assert(!progress?.items?.some((item) => /teacher editor recovery/i.test(item.title?.en || "")),
+    "completed teacher recovery cannot remain in the in-progress kanban");
+  const next = columns.find((column) => column.id === "next");
+  assert(next?.items?.some((item) =>
+    /classes, disciplines and images/i.test(item.title?.en || "")),
+  "next kanban must contain the reconciled classes/disciplines/media block");
+  assert(/production verified/i.test(platform?.priorityNote?.en || ""),
+    "platform priority note must state production verification in English");
+  assert(/production перевір/i.test(platform?.priorityNote?.uk || ""),
+    "platform priority note must state production verification in Ukrainian");
 
   return report;
 }
