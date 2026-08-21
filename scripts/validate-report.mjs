@@ -1,0 +1,94 @@
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+function assert(condition, message) {
+  if (!condition) throw new Error(`Report validation failed: ${message}`);
+}
+
+function assertUnique(values, label) {
+  const seen = new Set();
+  for (const value of values) {
+    assert(typeof value === "string" && value.length > 0, `${label} contains an empty id`);
+    assert(!seen.has(value), `${label} contains duplicate id '${value}'`);
+    seen.add(value);
+  }
+}
+
+export function resolveReportSource() {
+  return resolve(
+    process.env.REPORT_SOURCE_PATH ||
+      resolve(process.cwd(), "..", "yoga-fusion", "report-source", "report.json"),
+  );
+}
+
+export function loadAndValidateReport(sourcePath = resolveReportSource()) {
+  assert(existsSync(sourcePath), `canonical source not found at ${sourcePath}`);
+
+  let report;
+  try {
+    report = JSON.parse(readFileSync(sourcePath, "utf8"));
+  } catch (error) {
+    throw new Error(`Report validation failed: cannot parse ${sourcePath}: ${error.message}`);
+  }
+
+  assert(report && typeof report === "object", "root must be an object");
+  assert(ISO_DATE.test(report.updatedAt), "updatedAt must be YYYY-MM-DD");
+  assert(ISO_DATE.test(report.sourceAsOf), "sourceAsOf must be YYYY-MM-DD");
+  assert(report.sourceAsOf <= report.updatedAt, "sourceAsOf cannot be newer than updatedAt");
+  assert(typeof report.sourceRevision === "string" && report.sourceRevision.length > 0,
+    "sourceRevision is required");
+  assert(typeof report.statusSource === "string" && report.statusSource.length > 0,
+    "statusSource is required");
+
+  assert(Array.isArray(report.weeks) && report.weeks.length > 0, "weeks must be non-empty");
+  assertUnique(report.weeks.map((week) => week.id), "weeks");
+  const hours = report.weeks.reduce((sum, week) => {
+    assert(Number.isFinite(week.hours) && week.hours >= 0, `invalid hours for ${week.id}`);
+    return sum + week.hours;
+  }, 0);
+  assert(hours === report.totals?.hoursTotal,
+    `totals.hoursTotal=${report.totals?.hoursTotal} but weeks sum to ${hours}`);
+
+  const columns = report.kanban?.columns;
+  assert(Array.isArray(columns), "kanban.columns must be an array");
+  assertUnique(columns.map((column) => column.id), "kanban columns");
+  const tracks = report.roadmap?.tracks;
+  assert(Array.isArray(tracks), "roadmap.tracks must be an array");
+  assertUnique(tracks.map((track) => track.id), "roadmap tracks");
+
+  assert(report.facts?.adminScreenCount === 18,
+    "facts.adminScreenCount must match the current admin registry (18)");
+  const serialized = JSON.stringify(report);
+  assert(serialized.includes("18 розділів") && serialized.includes("18 sections"),
+    "UA and EN admin-screen statements must both match facts.adminScreenCount");
+
+  const teacherState = report.facts?.teacherEditor?.state;
+  assert(teacherState === "regressed", "teacher editor must remain regressed until production recovery");
+  const platform = tracks.find((track) => track.id === "platform");
+  const teacherStage = platform?.stages?.find((stage) => stage.title?.en === "Teachers");
+  assert(teacherStage, "platform Teachers stage is missing");
+  assert(teacherStage.status === "current", "regressed Teachers stage cannot be marked done");
+  assert(/regress/i.test(teacherStage.when?.en || ""),
+    "Teachers stage must state the current regression in English");
+  assert(/регрес/i.test(teacherStage.when?.uk || ""),
+    "Teachers stage must state the current regression in Ukrainian");
+
+  const progress = columns.find((column) => column.id === "progress");
+  assert(progress?.items?.some((item) => /teacher editor recovery/i.test(item.title?.en || "")),
+    "current kanban must contain teacher editor recovery");
+  assert(!/teacher management with photos[^.]*live/i.test(platform?.priorityNote?.en || ""),
+    "platform priority note still claims teacher management is live");
+
+  return { report, sourcePath };
+}
+
+const invokedDirectly = process.argv[1] &&
+  resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));
+
+if (invokedDirectly) {
+  const { report, sourcePath } = loadAndValidateReport();
+  console.log(`report valid — ${report.weeks.length} weeks, source ${sourcePath}`);
+}

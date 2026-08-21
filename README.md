@@ -1,24 +1,47 @@
 # Yoga Fusion — сторінка статусу
 
-Закрита паролем сторінка для команди студії: що зроблено, що в роботі,
-скільки годин за тиждень. Публікується на GitHub Pages.
+Захищена паролем сторінка для команди студії: що зроблено, що в роботі й
+скільки годин за тиждень. Цей public-репозиторій містить renderer та
+зашифрований `public/report.enc`; plaintext тут не зберігається.
+
+## Де джерело
+
+Канонічний versioned plaintext: приватний репозиторій
+`RestlessCorp/yoga-fusion-workspace`, файл `report-source/report.json`.
+Технічний production-стан звіряється з приватними
+`yoga-fusion-frontend/docs/production-status.md`,
+`docs/state/release-state.json` і changelog. Локальний
+`content/report.json` — лише стара gitignored-копія, не джерело.
 
 ## Як оновити звіт
 
-1. Правиш `content/report.json` — це джерело. Воно **не** в git.
-2. `npm run report` — шифрує його в `public/report.enc`.
-3. Коміт і пуш у `main`. GitHub Actions збирає й публікує.
+1. Оновити private `report-source/report.json` в окремій гілці й переглянути
+   звичайний Git diff.
+2. У PowerShell вказати source і запустити валідацію:
 
-Новий тиждень = ще один об'єкт на початок масиву `weeks`. Дошка — масив
-`kanban.columns`. Ніякої верстки для цього чіпати не треба.
+   ```powershell
+   $env:REPORT_SOURCE_PATH = 'D:\Unity Projects\yoga-fusion\report-source\report.json'
+   npm run validate:report
+   ```
 
-## Чому шифрування, а не перевірка пароля
+3. Передати новий пароль лише через env (щонайменше 16 символів) і зібрати:
 
-GitHub Pages — статика, серверу нема де перевіряти пароль. Порівняння в
-JavaScript було б театром: відповідь лежала б у бандлі поруч із питанням.
-Тому шифрується сам звіт (AES-256-GCM, ключ із пароля через PBKDF2, 300k
-ітерацій), а в репозиторій потрапляє лише шифротекст. Без пароля на сторінці
-нема чого читати навіть у вихідних текстах.
+   ```powershell
+   $env:REPORT_PASSPHRASE = '<пароль, якого немає в git>'
+   npm run report
+   Remove-Item Env:REPORT_PASSPHRASE
+   ```
 
-Пароль передається команді окремо і в репозиторії не зберігається.
-Для іншого пароля: `REPORT_PASSPHRASE=... npm run report`.
+4. Перевірити сторінку локально. Пуш у `main` автоматично публікує GitHub
+   Pages, тому він робиться лише після прямого підтвердження Andriy.
+
+Новий тиждень = ще один об'єкт на початок `weeks`; поточна черга —
+`kanban.columns`. Roadmap зберігає історію й напрям, але не визначає поточне
+«далі».
+
+## Чому шифрування
+
+GitHub Pages — статика, серверу нема де перевіряти пароль. Тому шифрується сам
+звіт: AES-256-GCM, ключ із passphrase через PBKDF2-SHA256, 300k ітерацій. У
+репозиторій потрапляє лише ciphertext. Пароль передається команді окремо; у
+коді немає і не може бути fallback-значення.

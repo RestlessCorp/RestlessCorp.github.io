@@ -40,6 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Plaintext source of the status report — only the encrypted public/report.enc
-# is published. Regenerate with: node scripts/build-report.mjs
+# Legacy local plaintext copy. The canonical, versioned source now lives in the
+# private yoga-fusion-workspace/report-source/report.json. Never use this ignored
+# file as the newest source; only public/report.enc is published here.
 /content

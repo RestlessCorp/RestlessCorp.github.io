@@ -1,4 +1,5 @@
-// Encrypts content/report.json into public/report.enc.
+// Validates the versioned private report source and encrypts it into
+// public/report.enc.
 //
 // GitHub Pages is static hosting: there is no server to check a password, so a
 // JavaScript comparison would be theatre — the answer would sit in the bundle
@@ -9,16 +10,24 @@
 // AES-256-GCM with a PBKDF2-SHA256 key (300k iterations) — the same primitives
 // the browser gets from Web Crypto, so the page can undo exactly this.
 //
-// Run: node scripts/build-report.mjs
-// The plaintext (content/) is gitignored on purpose; only report.enc is committed.
+// Run with REPORT_SOURCE_PATH and REPORT_PASSPHRASE; only report.enc is
+// committed to this public repository.
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync } from "node:fs";
 import { webcrypto as crypto } from "node:crypto";
+import { loadAndValidateReport } from "./validate-report.mjs";
 
-const PASSPHRASE = process.env.REPORT_PASSPHRASE || "YogaFusion";
+const PASSPHRASE = process.env.REPORT_PASSPHRASE;
 const ITERATIONS = 300_000;
 
-const source = JSON.parse(readFileSync("content/report.json", "utf8"));
+if (!PASSPHRASE) {
+  throw new Error("REPORT_PASSPHRASE is required; there is no repository fallback.");
+}
+if (PASSPHRASE.length < 16) {
+  throw new Error("REPORT_PASSPHRASE must be at least 16 characters.");
+}
+
+const { report: source, sourcePath } = loadAndValidateReport();
 const plaintext = new TextEncoder().encode(JSON.stringify(source));
 
 const salt = crypto.getRandomValues(new Uint8Array(16));
@@ -59,5 +68,5 @@ writeFileSync(
 const weeks = source.weeks?.length ?? 0;
 console.log(
   `report.enc written — ${weeks} тижн${weeks === 1 ? "евий блок" : "і"}, ` +
-    `${(ciphertext.length / 1024).toFixed(1)} KB шифротексту`,
+    `${(ciphertext.length / 1024).toFixed(1)} KB шифротексту; source ${sourcePath}`,
 );

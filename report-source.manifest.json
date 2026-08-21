@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "canonicalRepository": "RestlessCorp/yoga-fusion-workspace",
+  "canonicalPath": "report-source/report.json",
+  "visibility": "private",
+  "defaultLocalPath": "../yoga-fusion/report-source/report.json",
+  "legacyIgnoredPath": "content/report.json",
+  "migratedAt": "2026-08-21"
+}

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "validate:report": "node scripts/validate-report.mjs",
     "report": "node scripts/build-report.mjs"
   },
   "dependencies": {
