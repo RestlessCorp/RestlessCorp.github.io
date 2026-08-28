@@ -30,13 +30,13 @@ function validReport() {
     sourceRevision: "yoga-fusion/release-state@2026-08-21",
     statusSource: "yoga-fusion-frontend/docs/production-status.md",
     subtitle: {
-      uk: "18 розділів",
-      en: "18 sections",
+      uk: "19 розділів",
+      en: "19 sections",
     },
     totals: { hoursTotal: 1 },
     weeks: [{ id: "2026-08-17", hours: 1 }],
     facts: {
-      adminScreenCount: 18,
+      adminScreenCount: 19,
       productionRelease: {
         state: "production_verified",
         verifiedAt: "2026-08-21",
@@ -71,8 +71,8 @@ function validReport() {
           items: [
             {
               title: {
-                uk: "Практики, напрями й картинки",
-                en: "Classes, disciplines and images",
+                uk: "Порожній слот у розкладі без акаунта",
+                en: "An ordinary empty schedule slot without an account",
               },
             },
           ],
@@ -84,8 +84,8 @@ function validReport() {
         {
           id: "platform",
           priorityNote: {
-            uk: "Редактор production перевірено",
-            en: "Teacher editor production verified",
+            uk: "Керування практиками й напрямами завершено",
+            en: "Classes and disciplines are complete",
           },
           stages: [
             {
@@ -95,6 +95,13 @@ function validReport() {
                 uk: "регресія 15–20 серпня · відновлено 21 серпня",
                 en: "regression August 15–20 · recovered August 21",
               },
+            },
+            {
+              title: {
+                uk: "Практики, напрями й картинки",
+                en: "Classes, disciplines and images",
+              },
+              status: "done",
             },
           ],
         },
