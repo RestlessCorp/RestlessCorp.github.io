@@ -86,10 +86,10 @@ export function validateReport(report) {
   assert(Array.isArray(tracks), "roadmap.tracks must be an array");
   assertUnique(tracks.map((track) => track.id), "roadmap tracks");
 
-  assert(report.facts?.adminScreenCount === 18,
-    "facts.adminScreenCount must match the current admin registry (18)");
+  assert(report.facts?.adminScreenCount === 19,
+    "facts.adminScreenCount must match the current admin registry (19)");
   const serialized = JSON.stringify(report);
-  assert(serialized.includes("18 розділів") && serialized.includes("18 sections"),
+  assert(serialized.includes("19 розділів") && serialized.includes("19 sections"),
     "UA and EN admin-screen statements must both match facts.adminScreenCount");
 
   const productionRelease = report.facts?.productionRelease;
@@ -136,13 +136,20 @@ export function validateReport(report) {
   assert(!progress?.items?.some((item) => /teacher editor recovery/i.test(item.title?.en || "")),
     "completed teacher recovery cannot remain in the in-progress kanban");
   const next = columns.find((column) => column.id === "next");
-  assert(next?.items?.some((item) =>
+  const classesStage = platform?.stages?.find((stage) =>
+    stage.title?.en === "Classes, disciplines and images");
+  assert(classesStage?.status === "done",
+    "released classes/disciplines/media stage must be marked done");
+  assert(!next?.items?.some((item) =>
     /classes, disciplines and images/i.test(item.title?.en || "")),
-  "next kanban must contain the reconciled classes/disciplines/media block");
-  assert(/production verified/i.test(platform?.priorityNote?.en || ""),
-    "platform priority note must state production verification in English");
-  assert(/production перевір/i.test(platform?.priorityNote?.uk || ""),
-    "platform priority note must state production verification in Ukrainian");
+  "completed classes/disciplines/media work cannot remain in the next kanban");
+  assert(next?.items?.some((item) =>
+    /empty schedule slot/i.test(item.title?.en || "")),
+  "next kanban must carry the gated ordinary empty-slot follow-up");
+  assert(/classes and disciplines are complete/i.test(platform?.priorityNote?.en || ""),
+    "platform priority note must state completed classes in English");
+  assert(/практиками й напрямами завершено/i.test(platform?.priorityNote?.uk || ""),
+    "platform priority note must state completed classes in Ukrainian");
 
   return report;
 }
