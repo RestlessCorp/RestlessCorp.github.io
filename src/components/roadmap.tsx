@@ -48,7 +48,7 @@ function StageRow({
   const tone = STATUS[stage.status];
   const copy = ui[lang];
   return (
-    <li className="relative grid grid-cols-[auto_1fr] gap-4 pb-6 last:pb-0">
+    <li className="relative grid grid-cols-[auto_minmax(0,1fr)] gap-4 pb-6 last:pb-0">
       {/* rail + dot */}
       <div className="flex flex-col items-center">
         <span
@@ -59,14 +59,14 @@ function StageRow({
 
       <div
         className={
-          "rounded-2xl border border-line px-4 py-3 " +
+          "min-w-0 rounded-2xl border border-line px-4 py-3 " +
           (stage.status === "current" ? "bg-surface-2" : "bg-surface")
         }
       >
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h4 className="font-bold">{t(stage.title, lang)}</h4>
+        <div className="flex min-w-0 flex-wrap items-start justify-between gap-2">
+          <h4 className="min-w-0 font-bold">{t(stage.title, lang)}</h4>
           <span
-            className={`shrink-0 rounded-full border px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide ${tone.text}`}
+            className={`max-w-full break-words rounded-2xl border px-2 py-0.5 text-right text-[0.62rem] font-bold uppercase leading-tight tracking-wide whitespace-normal sm:max-w-[70%] ${tone.text}`}
           >
             {copy[tone.labelKey]} · {t(stage.when, lang)}
           </span>
