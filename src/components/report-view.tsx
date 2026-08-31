@@ -320,14 +320,14 @@ export function ReportView({
                   {column.items.map((item) => (
                     <article
                       key={t(item.title, lang)}
-                      className="rounded-2xl border border-line bg-surface px-4 py-4"
+                      className="min-w-0 rounded-2xl border border-line bg-surface px-4 py-4"
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <h4 className="font-bold">{t(item.title, lang)}</h4>
+                      <div className="grid min-w-0 gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
+                        <h4 className="min-w-0 font-bold">{t(item.title, lang)}</h4>
                         {item.who && (
                           <span
                             className={
-                              "shrink-0 rounded-full border px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide " +
+                              "w-fit max-w-full break-words whitespace-normal rounded-full border px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide sm:max-w-[20rem] " +
                               (COLUMN_TONE[column.id] ??
                                 "text-ink-soft border-line-strong")
                             }
