@@ -107,7 +107,10 @@ export function ReportView({
           втратила сенс. Що лишилось із нього — видно на дошці. */}
       <div className="mt-8 grid grid-cols-3 gap-3">
         <Stat value={String(totals.hoursTotal)} label={copy.statHoursTotal} />
-        <Stat value={String(totals.shipped)} label={copy.statShipped} />
+        <Stat
+          value={`${totals.shipped}${totals.shippedIsLowerBound ? "+" : ""}`}
+          label={copy.statShipped}
+        />
         <Stat
           value={String(inProgress.length + next.length)}
           label={copy.statActive}

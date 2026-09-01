@@ -71,6 +71,7 @@ export type Report = {
     tzDone: number;
     tzTotal: number;
     shipped: number;
+    shippedIsLowerBound?: boolean;
     pending: number;
   };
   weeks: Week[];
