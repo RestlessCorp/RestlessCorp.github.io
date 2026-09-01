@@ -2,6 +2,7 @@
 
 import type { Report, Stage, StageStatus } from "@/lib/report";
 import { t, ui, type Lang } from "@/lib/i18n";
+import { ContentText } from "@/components/content-text";
 
 // A stage is one of four things, and the eye should be able to tell which
 // without reading: filled dot = behind us, ringed dot = where we are now,
@@ -63,21 +64,23 @@ function StageRow({
           (stage.status === "current" ? "bg-surface-2" : "bg-surface")
         }
       >
-        <div className="flex min-w-0 flex-wrap items-start justify-between gap-2">
+        <div className="grid min-w-0 gap-2">
           <h4 className="min-w-0 font-bold">{t(stage.title, lang)}</h4>
           <span
-            className={`max-w-full break-words rounded-2xl border px-2 py-0.5 text-right text-[0.62rem] font-bold uppercase leading-tight tracking-wide whitespace-normal sm:max-w-[70%] ${tone.text}`}
+            className={`w-fit max-w-full break-words rounded-2xl border px-2 py-0.5 text-left text-[0.62rem] font-bold uppercase leading-tight tracking-wide whitespace-normal ${tone.text}`}
           >
             {copy[tone.labelKey]} · {t(stage.when, lang)}
           </span>
         </div>
         <p className="mt-1 whitespace-pre-line text-[0.9rem] text-ink-soft">
-          {t(stage.text, lang)}
+          <ContentText text={t(stage.text, lang)} />
         </p>
         {stage.needs && (
           <p className="mt-2 flex items-start gap-1.5 text-[0.82rem] text-rose">
             <span aria-hidden>▸</span>
-            <span>{t(stage.needs, lang)}</span>
+            <span>
+              <ContentText text={t(stage.needs, lang)} />
+            </span>
           </p>
         )}
         <ul className="mt-3 flex flex-wrap gap-1.5 p-0">
@@ -105,7 +108,9 @@ export function Roadmap({
   const copy = ui[lang];
   return (
     <div className="mt-5">
-      <p className="text-sm text-ink-soft">{t(roadmap.note, lang)}</p>
+      <p className="text-sm text-ink-soft">
+        <ContentText text={t(roadmap.note, lang)} />
+      </p>
 
       {/* Three tracks now, not two. On a wide screen they sit side by side, so
           the roadmap breaks out past the article's reading width to give each
@@ -146,13 +151,13 @@ export function Roadmap({
 
               {track.note && (
                 <p className="mt-3 whitespace-pre-line text-[0.85rem] text-ink-soft">
-                  {t(track.note, lang)}
+                  <ContentText text={t(track.note, lang)} />
                 </p>
               )}
               {track.priorityNote && (
                 <p className="mt-3 rounded-xl border border-line-strong bg-surface-2 px-3 py-2 text-[0.82rem]">
                   <span className="font-bold">{copy.priorityLabel} </span>
-                  {t(track.priorityNote, lang)}
+                  <ContentText text={t(track.priorityNote, lang)} />
                 </p>
               )}
               {track.deadline && (
@@ -160,7 +165,7 @@ export function Roadmap({
                   <span className="font-bold text-amber">
                     {copy.deadlineLabel}{" "}
                   </span>
-                  {t(track.deadline, lang)}
+                  <ContentText text={t(track.deadline, lang)} />
                 </p>
               )}
 

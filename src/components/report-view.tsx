@@ -5,6 +5,7 @@ import type { Report } from "@/lib/report";
 import { Roadmap } from "@/components/roadmap";
 import { t, ui, type Lang } from "@/lib/i18n";
 import { LangSwitch } from "@/components/lang-switch";
+import { ContentText } from "@/components/content-text";
 
 // Same colour grammar as the internal report: amber for in flight and green
 // for concrete work that comes next.
@@ -186,7 +187,7 @@ export function ReportView({
           <section className="mt-12">
             <SectionTitle>{t(report.release.title, lang)}</SectionTitle>
             <p className="mt-3 text-sm text-ink-soft">
-              {t(report.release.note, lang)}
+              <ContentText text={t(report.release.note, lang)} />
             </p>
             <div className="mt-5 grid gap-3">
               {visibleReleases.map((item) => (
@@ -196,7 +197,7 @@ export function ReportView({
                 >
                   <h3 className="font-bold">{t(item.title, lang)}</h3>
                   <p className="mt-2 whitespace-pre-line text-[0.93rem]">
-                    {t(item.text, lang)}
+                    <ContentText text={t(item.text, lang)} />
                   </p>
                 </article>
               ))}
@@ -233,7 +234,7 @@ export function ReportView({
                     </span>
                   </summary>
                   <p className="mt-4 whitespace-pre-line text-[0.95rem]">
-                    {t(week.summary, lang)}
+                    <ContentText text={t(week.summary, lang)} />
                   </p>
                   {week.groups.map((group) => (
                     <div key={t(group.title, lang)} className="mt-6">
@@ -264,7 +265,7 @@ export function ReportView({
                               )}
                             </div>
                             <p className="mt-1 whitespace-pre-line text-[0.9rem] text-ink-soft">
-                              {t(entry.text, lang)}
+                              <ContentText text={t(entry.text, lang)} />
                             </p>
                           </li>
                         ))}
@@ -273,7 +274,7 @@ export function ReportView({
                   ))}
                   {week.notes && (
                     <p className="mt-5 border-l-2 border-line-strong pl-3 text-sm text-ink-soft">
-                      {t(week.notes, lang)}
+                      <ContentText text={t(week.notes, lang)} />
                     </p>
                   )}
                 </details>
@@ -291,7 +292,7 @@ export function ReportView({
               по ТЗ. Без нього зміна в шапці виглядала б як пропажа. */}
           {report.kanban.note && (
             <p className="mt-3 text-sm text-ink-soft">
-              {t(report.kanban.note, lang)}
+              <ContentText text={t(report.kanban.note, lang)} />
             </p>
           )}
           <div className="mt-6 grid gap-6 md:grid-cols-2">
@@ -322,12 +323,12 @@ export function ReportView({
                       key={t(item.title, lang)}
                       className="min-w-0 rounded-2xl border border-line bg-surface px-4 py-4"
                     >
-                      <div className="grid min-w-0 gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
+                      <div className="grid min-w-0 gap-2">
                         <h4 className="min-w-0 font-bold">{t(item.title, lang)}</h4>
                         {item.who && (
                           <span
                             className={
-                              "w-fit max-w-full break-words whitespace-normal rounded-full border px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide sm:max-w-[20rem] " +
+                              "w-fit max-w-full break-words whitespace-normal rounded-full border px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide " +
                               (COLUMN_TONE[column.id] ??
                                 "text-ink-soft border-line-strong")
                             }
@@ -337,7 +338,7 @@ export function ReportView({
                         )}
                       </div>
                       <p className="mt-2 whitespace-pre-line text-[0.9rem] text-ink-soft">
-                        {t(item.text, lang)}
+                        <ContentText text={t(item.text, lang)} />
                       </p>
                     </article>
                   ))}
