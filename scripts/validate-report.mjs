@@ -95,8 +95,10 @@ export function validateReport(report) {
   const productionRelease = report.facts?.productionRelease;
   assert(productionRelease?.state === "production_verified",
     "production release must be production_verified");
-  assert(productionRelease?.verifiedAt === report.sourceAsOf,
-    "production release verification date must match sourceAsOf");
+  assert(ISO_DATE.test(productionRelease?.verifiedAt || ""),
+    "production release verifiedAt must be YYYY-MM-DD");
+  assert(productionRelease.verifiedAt <= report.sourceAsOf,
+    "production release verifiedAt cannot be newer than sourceAsOf");
   assert(COMMIT_SHA.test(productionRelease?.sourceSha || ""),
     "production release must carry a full source SHA");
   for (const field of ["siteDeploymentId", "adminDeploymentId", "bffDeploymentId"]) {

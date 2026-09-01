@@ -169,6 +169,38 @@ test("sourceRevision date must match sourceAsOf", () => {
   );
 });
 
+test("an older production verification remains valid when sourceAsOf advances", () => {
+  const report = validReport();
+  report.updatedAt = "2026-08-22";
+  report.sourceAsOf = "2026-08-22";
+  report.sourceRevision = "yoga-fusion/release-state@2026-08-22";
+
+  assert.equal(
+    validateReport(report).facts.productionRelease.verifiedAt,
+    "2026-08-21",
+  );
+});
+
+test("a production verification later than sourceAsOf is rejected", () => {
+  const report = validReport();
+  report.facts.productionRelease.verifiedAt = "2026-08-22";
+
+  assert.throws(
+    () => validateReport(report),
+    /production release verifiedAt cannot be newer than sourceAsOf/,
+  );
+});
+
+test("production verification requires an ISO calendar-date shape", () => {
+  const report = validReport();
+  report.facts.productionRelease.verifiedAt = "21.08.2026";
+
+  assert.throws(
+    () => validateReport(report),
+    /production release verifiedAt must be YYYY-MM-DD/,
+  );
+});
+
 test("teacher recovery evidence must point to the production deployment", () => {
   const report = validReport();
   report.facts.teacherEditor.recoveredAdminDeploymentId = "dpl_other";
