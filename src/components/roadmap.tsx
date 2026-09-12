@@ -84,7 +84,7 @@ function StageRow({
           </p>
         )}
         <ul className="mt-3 flex flex-wrap gap-1.5 p-0">
-          {stage.items.map((item) => (
+          {(stage.items ?? []).map((item) => (
             <li
               key={t(item, lang)}
               className="list-none rounded-full border border-line bg-bg px-2.5 py-0.5 text-[0.78rem] text-ink-soft"

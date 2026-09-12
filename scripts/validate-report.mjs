@@ -50,6 +50,20 @@ export function resolveReportSource({
   return resolve(dirname(manifestPath), manifest.defaultLocalPath);
 }
 
+export function validateRoadmap(tracks) {
+  assert(Array.isArray(tracks), "roadmap.tracks must be an array");
+  assertUnique(tracks.map((track) => track.id), "roadmap tracks");
+  for (const track of tracks) {
+    assert(Array.isArray(track.stages), `roadmap ${track.id}: stages must be an array`);
+    for (const stage of track.stages) {
+      assert(["done", "current", "next", "planned"].includes(stage.status),
+        `roadmap ${track.id}: invalid stage status`);
+      assert(stage.items == null || Array.isArray(stage.items),
+        `roadmap ${track.id}: items must be an array when provided`);
+    }
+  }
+}
+
 export function validateReport(report) {
   assert(report && typeof report === "object", "root must be an object");
   assert(ISO_DATE.test(report.updatedAt), "updatedAt must be YYYY-MM-DD");
@@ -83,8 +97,7 @@ export function validateReport(report) {
   assert(Array.isArray(columns), "kanban.columns must be an array");
   assertUnique(columns.map((column) => column.id), "kanban columns");
   const tracks = report.roadmap?.tracks;
-  assert(Array.isArray(tracks), "roadmap.tracks must be an array");
-  assertUnique(tracks.map((track) => track.id), "roadmap tracks");
+  validateRoadmap(tracks);
 
   assert(report.facts?.adminScreenCount === 19,
     "facts.adminScreenCount must match the current admin registry (19)");

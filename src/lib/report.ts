@@ -33,7 +33,7 @@ export type Stage = {
   status: StageStatus;
   when: Localized;
   text: Localized;
-  items: Localized[];
+  items?: Localized[];
   /** what the stage waits on, when it is not just our own work */
   needs?: Localized;
 };
