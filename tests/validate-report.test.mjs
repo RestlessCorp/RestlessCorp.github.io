@@ -110,6 +110,35 @@ function validReport() {
   };
 }
 
+function completedAssignmentReport() {
+  const report = validReport();
+  report.facts.accountlessTeacherAssignment = {
+    state: "production_verified",
+    sourceSha: "dbc7f991fa1fb3a89879bd20b330fcace433f773",
+    adminDeploymentId: "dpl_4VKLFfMU9xHXsc9FgsfX9ZVVwp7o",
+    verifiedAt: "2026-08-21",
+  };
+  report.kanban.columns.find((column) => column.id === "next").items = [];
+  return report;
+}
+
+test("verified accountless assignments leave the next queue", () => {
+  assert.doesNotThrow(() => validateReport(completedAssignmentReport()));
+});
+
+test("closing accountless assignments requires a deployment receipt", () => {
+  const report = completedAssignmentReport();
+  delete report.facts.accountlessTeacherAssignment.adminDeploymentId;
+  assert.throws(() => validateReport(report), /requires an admin deployment/);
+});
+
+test("a completed assignment cannot remain an open follow-up", () => {
+  const report = completedAssignmentReport();
+  report.kanban.columns.find((column) => column.id === "next").items =
+    validReport().kanban.columns.find((column) => column.id === "next").items;
+  assert.throws(() => validateReport(report), /cannot remain in next/);
+});
+
 test("REPORT_SOURCE_PATH has priority over the documented local default", () => {
   const root = temporaryDirectory();
   const explicit = join(root, "private", "report.json");

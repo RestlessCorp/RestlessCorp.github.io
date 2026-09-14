@@ -158,9 +158,22 @@ export function validateReport(report) {
   assert(!next?.items?.some((item) =>
     /classes, disciplines and images/i.test(item.title?.en || "")),
   "completed classes/disciplines/media work cannot remain in the next kanban");
-  assert(next?.items?.some((item) =>
-    /empty schedule slot/i.test(item.title?.en || "")),
-  "next kanban must carry the gated ordinary empty-slot follow-up");
+  const hasEmptySlotFollowUp = next?.items?.some((item) =>
+    /empty schedule slot/i.test(item.title?.en || ""));
+  const assignment = report.facts?.accountlessTeacherAssignment;
+  if (assignment?.state === "production_verified") {
+    assert(COMMIT_SHA.test(assignment.sourceSha || ""),
+      "accountless teacher assignment requires a full source SHA");
+    assert(DEPLOYMENT_ID.test(assignment.adminDeploymentId || ""),
+      "accountless teacher assignment requires an admin deployment id");
+    assert(ISO_DATE.test(assignment.verifiedAt || "") && assignment.verifiedAt <= report.sourceAsOf,
+      "accountless teacher assignment requires a valid verification date");
+    assert(!hasEmptySlotFollowUp,
+      "completed accountless teacher assignment cannot remain in next kanban");
+  } else {
+    assert(hasEmptySlotFollowUp,
+      "next kanban must carry the gated ordinary empty-slot follow-up");
+  }
   assert(/classes and disciplines are complete/i.test(platform?.priorityNote?.en || ""),
     "platform priority note must state completed classes in English");
   assert(/практиками й напрямами завершено/i.test(platform?.priorityNote?.uk || ""),
