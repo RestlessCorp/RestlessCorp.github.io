@@ -30,13 +30,13 @@ function validReport() {
     sourceRevision: "yoga-fusion/release-state@2026-08-21",
     statusSource: "yoga-fusion-frontend/docs/production-status.md",
     subtitle: {
-      uk: "19 розділів",
-      en: "19 sections",
+      uk: "21 розділ",
+      en: "21 sections",
     },
     totals: { hoursTotal: 1 },
     weeks: [{ id: "2026-08-17", hours: 1 }],
     facts: {
-      adminScreenCount: 19,
+      adminScreenCount: 21,
       productionRelease: {
         state: "production_verified",
         verifiedAt: "2026-08-21",

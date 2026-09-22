@@ -99,10 +99,12 @@ export function validateReport(report) {
   const tracks = report.roadmap?.tracks;
   validateRoadmap(tracks);
 
-  assert(report.facts?.adminScreenCount === 19,
-    "facts.adminScreenCount must match the current admin registry (19)");
+  // ADMIN_SCREENS у yoga-fusion-frontend/src/views/admin/admin-nav.ts: 21 з 20.09
+  // («Ефіри» знову окремий розділ, додались «Записи»). Число звіряти з кодом.
+  assert(report.facts?.adminScreenCount === 21,
+    "facts.adminScreenCount must match the current admin registry (21)");
   const serialized = JSON.stringify(report);
-  assert(serialized.includes("19 розділів") && serialized.includes("19 sections"),
+  assert(serialized.includes("21 розділ") && serialized.includes("21 sections"),
     "UA and EN admin-screen statements must both match facts.adminScreenCount");
 
   const productionRelease = report.facts?.productionRelease;
