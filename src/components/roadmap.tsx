@@ -49,23 +49,23 @@ function StageRow({
   const tone = STATUS[stage.status];
   const copy = ui[lang];
   return (
-    <li className="relative grid grid-cols-[auto_minmax(0,1fr)] gap-4 pb-6 last:pb-0">
+    <li className="relative grid grid-cols-[auto_minmax(0,1fr)] gap-[12px] pb-6 last:pb-0">
       {/* rail + dot */}
       <div className="flex flex-col items-center">
         <span
-          className={`mt-1.5 h-3.5 w-3.5 shrink-0 rounded-full border-2 ${tone.dot}`}
+          className={`mt-1.5 h-[14px] w-[14px] shrink-0 rounded-full border-2 ${tone.dot}`}
         />
         {!last && <span className={`mt-1 w-0.5 flex-1 ${tone.line}`} />}
       </div>
 
       <div
         className={
-          "min-w-0 rounded-2xl border border-line px-4 py-3 " +
+          "min-w-0 rounded-2xl border border-line px-[16px] py-3 " +
           (stage.status === "current" ? "bg-surface-2" : "bg-surface")
         }
       >
         <div className="grid min-w-0 gap-2">
-          <h4 className="min-w-0 font-bold">{t(stage.title, lang)}</h4>
+          <h4 className="min-w-0 break-words font-bold">{t(stage.title, lang)}</h4>
           <span
             className={`w-fit max-w-full break-words rounded-2xl border px-2 py-0.5 text-left text-[0.62rem] font-bold uppercase leading-tight tracking-wide whitespace-normal ${tone.text}`}
           >
@@ -87,7 +87,7 @@ function StageRow({
           {(stage.items ?? []).map((item) => (
             <li
               key={t(item, lang)}
-              className="list-none rounded-full border border-line bg-bg px-2.5 py-0.5 text-[0.78rem] text-ink-soft"
+              className="max-w-full list-none break-words rounded-full border border-line bg-bg px-2.5 py-0.5 text-[0.78rem] text-ink-soft"
             >
               {t(item, lang)}
             </li>
@@ -112,25 +112,22 @@ export function Roadmap({
         <ContentText text={t(roadmap.note, lang)} />
       </p>
 
-      {/* Three tracks now, not two. On a wide screen they sit side by side, so
-          the roadmap breaks out past the article's reading width to give each
-          timeline room; below xl they stack two-up, then one. */}
-      <div className="mt-7 grid gap-10 sm:grid-cols-2 xl:-mx-24 xl:grid-cols-3">
+      <div className="mt-7 grid gap-4">
         {roadmap.tracks.map((track) => {
           const done = track.stages.filter((s) => s.status === "done").length;
           return (
-            <section key={track.id}>
-              <header className="flex items-baseline justify-between gap-3">
-                <div>
-                  <h3 className="display text-2xl">{t(track.title, lang)}</h3>
-                  <p className="text-xs text-ink-soft">
-                    {t(track.subtitle, lang)}
-                  </p>
-                </div>
-                <span className="shrink-0 text-xs text-ink-soft tabular-nums">
-                  {copy.stagesProgress(done, track.stages.length)}
+            <details key={track.id} className="min-w-0 rounded-2xl border border-line bg-surface px-[20px] pb-5">
+              <summary className="min-h-11 cursor-pointer py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green">
+                <span className="ml-1 inline-flex max-w-full flex-wrap items-baseline gap-x-4 gap-y-2 align-middle">
+                  <span className="display min-w-0 max-w-full break-words text-2xl">{t(track.title, lang)}</span>
+                  <span className="text-xs text-ink-soft tabular-nums">
+                    {lang === "uk" ? "архів" : "archive"} · {copy.stagesProgress(done, track.stages.length)}
+                  </span>
+                  <span className="text-xs font-bold text-green">
+                    {lang === "uk" ? "розгорнути історію" : "expand history"}
+                  </span>
                 </span>
-              </header>
+              </summary>
 
               {/* a bar over the whole track, so the two are comparable at a glance */}
               <div className="mt-3 flex h-1.5 overflow-hidden rounded-full bg-line">
@@ -179,7 +176,7 @@ export function Roadmap({
                   />
                 ))}
               </ol>
-            </section>
+            </details>
           );
         })}
       </div>

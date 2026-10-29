@@ -87,7 +87,7 @@ export function ReportView({
   return (
     <div className="mx-auto max-w-4xl px-5 pb-24 pt-10 sm:pt-14">
       <header>
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-wrap items-start justify-between gap-3">
           <p className="text-[0.72rem] uppercase tracking-[0.22em] font-bold text-green">
             {report.project} · {copy.forTeam}
           </p>
@@ -105,7 +105,7 @@ export function ReportView({
           Половина зробленого в ТЗ не значилась узагалі (імпорт розкладу
           текстом, власна панель, аналітика воронки), а частина пунктів ТЗ
           втратила сенс. Що лишилось із нього — видно на дошці. */}
-      <div className="mt-8 grid grid-cols-3 gap-3">
+      <div className="mt-8 grid grid-cols-1 gap-3 min-[24rem]:grid-cols-3">
         <Stat value={String(totals.hoursTotal)} label={copy.statHoursTotal} />
         <Stat
           value={`${totals.shipped}${totals.shippedIsLowerBound ? "+" : ""}`}
@@ -117,7 +117,7 @@ export function ReportView({
         />
       </div>
 
-      <nav className="mt-9 flex gap-2 border-b border-line" role="tablist">
+      <nav className="mt-9 flex flex-wrap gap-2 border-b border-line" role="tablist">
         {(
           [
             ["report", copy.tabReport],
@@ -307,11 +307,7 @@ export function ReportView({
                   <span className="h-px flex-1 bg-line" />
                 </>
               );
-              return (
-              <div key={column.id}>
-                <h3 className="text-[0.78rem] font-bold uppercase tracking-[0.14em] text-ink-soft">
-                  <span className="flex items-center gap-2">{heading}</span>
-                </h3>
+              const cards = (
                 <div
                   id={`board-${column.id}`}
                   className="mt-3 grid gap-3"
@@ -327,7 +323,7 @@ export function ReportView({
                       className="min-w-0 rounded-2xl border border-line bg-surface px-4 py-4"
                     >
                       <div className="grid min-w-0 gap-2">
-                        <h4 className="min-w-0 font-bold">{t(item.title, lang)}</h4>
+                        <h4 className="min-w-0 break-words font-bold">{t(item.title, lang)}</h4>
                         {item.who && (
                           <span
                             className={
@@ -346,7 +342,26 @@ export function ReportView({
                     </article>
                   ))}
                 </div>
-              </div>
+              );
+              return column.collapsed ? (
+                <details key={column.id} className="min-w-0 rounded-2xl border border-line px-4 pb-4">
+                  <summary className="min-h-11 cursor-pointer py-3 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-ink-soft focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green">
+                    <span className="ml-1 inline-flex max-w-full flex-wrap items-center gap-2 align-middle">
+                      {heading}
+                      <span className="text-[0.65rem] normal-case tracking-normal">
+                        {lang === "uk" ? "розгорнути" : "expand"}
+                      </span>
+                    </span>
+                  </summary>
+                  {cards}
+                </details>
+              ) : (
+                <div key={column.id} className="min-w-0">
+                  <h3 className="text-[0.78rem] font-bold uppercase tracking-[0.14em] text-ink-soft">
+                    <span className="flex items-center gap-2">{heading}</span>
+                  </h3>
+                  {cards}
+                </div>
               );
             })}
           </div>
