@@ -56,6 +56,7 @@ export type KanbanColumn = {
   id: string;
   title: Localized;
   items: KanbanItem[];
+  collapsed?: boolean;
   // An empty column reads as "nothing is happening", which is rarely what it
   // means — usually the work in it just isn't for this audience yet. When a
   // column can legitimately be empty, it says so in its own words.
