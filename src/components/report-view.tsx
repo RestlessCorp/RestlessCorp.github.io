@@ -85,7 +85,7 @@ export function ReportView({
   const hiddenReleases = report.release.items.length - visibleReleases.length;
 
   return (
-    <div className="mx-auto max-w-4xl px-5 pb-24 pt-10 sm:pt-14">
+    <div className="mx-auto min-w-0 max-w-4xl px-[20px] pb-24 pt-10 [overflow-wrap:anywhere] sm:pt-14">
       <header>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <p className="text-[0.72rem] uppercase tracking-[0.22em] font-bold text-green">
@@ -148,8 +148,8 @@ export function ReportView({
               Раніше відповідь треба було збирати самому з трьох вкладок:
               згори лежав список релізів на 58 карток, а те, що робиться
               просто зараз, ховалось на «Дошці». */}
-          <section className="mt-9 rounded-2xl border border-line bg-surface px-5 py-3">
-            <div className="flex items-baseline justify-between gap-3 border-b border-line pb-3">
+          <section className="mt-9 rounded-2xl border border-line bg-surface px-[20px] py-3">
+            <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-3">
               <h2 className="display text-xl">{copy.nowTitle}</h2>
               <button
                 type="button"
@@ -196,7 +196,7 @@ export function ReportView({
               {visibleReleases.map((item) => (
                 <article
                   key={t(item.title, lang)}
-                  className="rounded-2xl border border-line border-l-[3px] border-l-amber bg-surface-2 px-5 py-4"
+                  className="min-w-0 rounded-2xl border border-line border-l-[3px] border-l-amber bg-surface-2 px-[20px] py-4"
                 >
                   <h3 className="font-bold">{t(item.title, lang)}</h3>
                   <p className="mt-2 whitespace-pre-line text-[0.93rem]">
@@ -226,10 +226,10 @@ export function ReportView({
                 <details
                   key={week.id}
                   open={index === 0}
-                  className="rounded-2xl border border-line bg-surface px-5 py-4"
+                  className="min-w-0 rounded-2xl border border-line bg-surface px-[16px] py-4 sm:px-[20px]"
                 >
-                  <summary className="flex cursor-pointer items-baseline justify-between gap-3">
-                    <span className="display text-xl">
+                  <summary className="flex cursor-pointer flex-col items-start gap-3 sm:flex-row sm:items-baseline sm:justify-between">
+                    <span className="display min-w-0 max-w-full text-xl [overflow-wrap:anywhere]">
                       {t(week.label, lang)}
                     </span>
                     <span className="shrink-0 rounded-full border border-green px-3 py-0.5 text-xs font-bold tabular-nums text-green">
@@ -242,22 +242,22 @@ export function ReportView({
                   {week.groups.map((group) => (
                     <div key={t(group.title, lang)} className="mt-6">
                       <h4 className="flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-ink-soft">
-                        <span>{t(group.title, lang)}</span>
-                        <span className="tabular-nums">
+                        <span className="min-w-0 flex-1">{t(group.title, lang)}</span>
+                        <span className="shrink-0 tabular-nums">
                           {group.items.length}
                         </span>
-                        <span className="h-px flex-1 bg-line" />
+                        <span className="hidden h-px flex-1 bg-line sm:block" />
                       </h4>
-                      <ul className="mt-3 grid list-none gap-2 p-0">
+                      <ul className="mt-3 grid min-w-0 grid-cols-1 list-none gap-2 p-0">
                         {group.items.map((entry, entryIndex) => (
                           <li
                             key={
                               t(entry.title, lang) ||
                               `${week.id}-${t(group.title, lang)}-${entryIndex}`
                             }
-                            className="rounded-xl bg-surface-2 px-4 py-3"
+                            className="min-w-0 rounded-xl bg-surface-2 px-[16px] py-3"
                           >
-                            <div className="flex items-start justify-between gap-3">
+                            <div className="flex flex-wrap items-start justify-between gap-3">
                               <span className="font-bold">
                                 {t(entry.title, lang)}
                               </span>
